@@ -1,9 +1,11 @@
-#pragma once
 #include "setsCpp.hpp"
 #include "randomF.hpp"
+#include "hashHeader.hpp"
 using namespace std;
 
 int main (int narg, char** argv){
+	string fileName = "partitionSet.out";
+
 	string* set = new string[100];
 	/*
 	//Random set with n contents
@@ -21,6 +23,7 @@ int main (int narg, char** argv){
 		cout << set[i] << " ";
 	}
 	cout << "\n";
-	printPartition(allSetPartition(set));
+	printPartition(allSetPartition(set,fileName));
+	calculateHash(fileName);
 	return 0;
 }
