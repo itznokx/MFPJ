@@ -4,10 +4,14 @@
 using namespace std;
 
 int main (void){
-	string number = "101101";
+	string number = "01";
+	/* // Validation test
 	if (validation(number) == true)
 		cout << "Is Binary" << endl;
 	else
 		cout << "Not a Binary" << endl << validationWithString(number) << endl << number << endl;
+	*/
+	// Sucessor test
+	cout << nextBin(number) << endl;
 	return 0;
 }

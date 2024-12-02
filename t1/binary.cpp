@@ -1,7 +1,7 @@
 #include <iostream>
 
 using namespace std;
-
+// Validation Binary functions
 bool validationChar (char c){
 	if (c == '0' || c=='1'){
 		return true;
@@ -26,4 +26,20 @@ string validationWithString (string binary){
 		}
 	}
 	return aux;
+}
+// Sucessor Binary function
+string nextBin (string bin){
+	int i;
+	for (i = bin.length()-1;i >= 0; i--){
+		if (bin[i] == '0'){
+			bin[i] = '1';
+			break;
+		}
+		else
+			bin[i] = '0';
+	}
+	if (i < 0){
+		bin = "1"+bin;
+	}
+	return bin;
 }
