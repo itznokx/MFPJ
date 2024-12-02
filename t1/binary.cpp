@@ -52,3 +52,7 @@ string inverseBin (string binary){
 	}
 	return binary;
 }
+string twosComplement (string binary){
+	string aux = inverseBin(binary);
+	return nextBin(aux);
+}
