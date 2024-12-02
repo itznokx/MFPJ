@@ -28,18 +28,27 @@ string validationWithString (string binary){
 	return aux;
 }
 // Sucessor Binary function
-string nextBin (string bin){
+string nextBin (string binary){
 	int i;
-	for (i = bin.length()-1;i >= 0; i--){
-		if (bin[i] == '0'){
-			bin[i] = '1';
+	for (i = binary.length()-1;i >= 0; i--){
+		if (binary[i] == '0'){
+			binary[i] = '1';
 			break;
 		}
 		else
-			bin[i] = '0';
+			binary[i] = '0';
 	}
 	if (i < 0){
-		bin = "1"+bin;
+		binary = "1"+binary;
 	}
-	return bin;
+	return binary;
+}
+string inverseBin (string binary){
+	for (int i = 0;i<binary.length();i++){
+		if (binary[i] == '0')
+			binary[i] = '1';
+		else
+			binary[i] = '0';
+	}
+	return binary;
 }

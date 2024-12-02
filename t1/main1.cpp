@@ -4,7 +4,7 @@
 using namespace std;
 
 int main (void){
-	string number = "01";
+	string number = "110110111";
 	/* // Validation test
 	if (validation(number) == true)
 		cout << "Is Binary" << endl;
@@ -12,6 +12,7 @@ int main (void){
 		cout << "Not a Binary" << endl << validationWithString(number) << endl << number << endl;
 	*/
 	// Sucessor test
-	cout << nextBin(number) << endl;
+	//cout << nextBin(number) << endl;
+	cout << inverseBin (number) << endl;
 	return 0;
 }
