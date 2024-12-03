@@ -1,6 +1,24 @@
 #include <iostream>
+#include <cmath>
 #include <tuple>
 using namespace std;
+// Aux functions
+string equalize (string b1,int x){
+	int counter = x-b1.length();
+
+	if (counter > 0){
+		string aux = "";
+		while (counter > 0){
+			aux += '0';
+			--counter;
+		}
+		aux+=b1;
+		return aux;
+	}
+	else{
+		return b1;
+	}
+}
 // Validation Binary functions
 bool validationChar (char c){
 	if (c == '0' || c=='1'){
@@ -58,7 +76,7 @@ string twosComplement (string binary){
 	string aux = inverseBin(binary);
 	return nextBin(aux);
 }
-// Binary operations
+// Binary operations auxiliars
 char andChar (char c1,char c2){
 	if (c1=='1'&&c2=='1')
 		return '1';
@@ -76,6 +94,17 @@ char xorChar(char c1,char c2){
 		return '0';
 	else
 		return '1';
+}
+// Binary operations
+string andBin (string s1,string s2){
+	int maxL = max(s1.length(),s2.length);
+	s1 = equalize(s1,maxL);
+	s2 = equalize(s2,maxL);
+	string final;
+	for (int i = 0; i<s1.length();i++){
+		final += andChar(s1[i],s2[i]);
+	}
+	return final;
 }
 // Mathematical Binary Operations
 tuple<char,int> sumAux (char c1,char c2,int v1){
