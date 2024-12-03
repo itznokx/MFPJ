@@ -130,22 +130,30 @@ string xorBin (string bin1,string bin2){
 tuple<char,int> sumAux (char c1,char c2,int v1){
 	if (c1 == '1' && c2 == '1'){
 		if (v1 == 1)
-			return {'1',1};
+			return {'k',1};
 		else
 			return {'0',1};
 	}
 	if (c1=='0' && c2 == '0'){
 		if (v1 == 1)
-			return {'1',0};
+			return {'w',0};
 		else
 			return {'0',0};
 	}
 	if (v1 == 1)
 		return {'0',1};
 	else
-		return {'1',0};
+		return {'q',0};
 }
+// Sum
 string sumBin (string n1,string n2){
-	string aux = "";
-	return aux;
+	int v1 = 0;
+	string finalSum;
+	auto [s1,s2] = equalizeN (n1,n2);
+	for (int i = s1.length(); i>=0;--i){
+		auto[c,vaux] = sumAux(s1[i],s2[i],v1);
+		finalSum+= c;
+		v1 = vaux;
+	}
+	return finalSum;
 }
