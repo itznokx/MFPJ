@@ -5,7 +5,7 @@ using namespace std;
 
 int main (void){
 	string number1 = "110110111";
-	string number2 = "01101";
+	string number2 = "10111";
 	/* // Validation test
 	if (validation(number) == true)
 		cout << "Is Binary" << endl;
@@ -15,6 +15,6 @@ int main (void){
 	// Sucessor test
 	//cout << nextBin(number) << endl;
 	//cout << inverseBin (number) << endl;
-	cout << andBin(number1,number2) << endl ;
+	cout << xorBin(number1,number2) << endl ;
 	return 0;
 }
