@@ -19,6 +19,12 @@ string equalize (string b1,int x){
 		return b1;
 	}
 }
+tuple<string,string> equalizeN (string bin1,string bin2){
+	int maxL = max(s1.length(),s2.length());
+	s1 = equalize(s1,maxL);
+	s2 = equalize(s2,maxL);
+	return {s1,s2};
+}
 // Validation Binary functions
 bool validationChar (char c){
 	if (c == '0' || c=='1'){
@@ -97,7 +103,7 @@ char xorChar(char c1,char c2){
 }
 // Binary operations
 string andBin (string s1,string s2){
-	int maxL = max(s1.length(),s2.length);
+	int maxL = max(s1.length(),s2.length());
 	s1 = equalize(s1,maxL);
 	s2 = equalize(s2,maxL);
 	string final;
