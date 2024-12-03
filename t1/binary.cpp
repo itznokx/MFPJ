@@ -20,10 +20,10 @@ string equalize (string b1,int x){
 	}
 }
 tuple<string,string> equalizeN (string bin1,string bin2){
-	int maxL = max(s1.length(),s2.length());
-	s1 = equalize(s1,maxL);
-	s2 = equalize(s2,maxL);
-	return {s1,s2};
+	int maxL = max(bin1.length(),bin2.length());
+	string s1 = equalize(bin1,maxL);
+	string s2 = equalize(bin2,maxL);
+	return std::make_tuple(s1,s2);
 }
 // Validation Binary functions
 bool validationChar (char c){
@@ -102,10 +102,8 @@ char xorChar(char c1,char c2){
 		return '1';
 }
 // Binary operations
-string andBin (string s1,string s2){
-	int maxL = max(s1.length(),s2.length());
-	s1 = equalize(s1,maxL);
-	s2 = equalize(s2,maxL);
+string andBin (string bin1,string bin2){
+	auto [s1,s2] = equalizeN(bin1,bin2);
 	string final;
 	for (int i = 0; i<s1.length();i++){
 		final += andChar(s1[i],s2[i]);
