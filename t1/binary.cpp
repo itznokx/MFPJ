@@ -103,14 +103,29 @@ char xorChar(char c1,char c2){
 }
 // Binary operations
 string andBin (string bin1,string bin2){
-	string [s1,s2] = equalizeN(bin1,bin2);
+	auto [s1,s2] = equalizeN(bin1,bin2);
 	string final;
 	for (int i = 0; i<s1.length();i++){
 		final += andChar(s1[i],s2[i]);
 	}
 	return final;
 }
-string
+string orBin (string bin1,string bin2){
+	auto [s1,s2] = equalizeN(bin1,bin2);
+	string final;
+	for (int i = 0; i<s1.length();i++){
+		final += orChar(s1[i],s2[i]);
+	}
+	return final;
+}
+string xorBin (string bin1,string bin2){
+	auto [s1,s2] = equalizeN(bin1,bin2);
+	string final;
+	for (int i = 0; i<s1.length();i++){
+		final += xorChar(s1[i],s2[i]);
+	}
+	return final;
+}
 // Mathematical Binary Operations
 tuple<char,int> sumAux (char c1,char c2,int v1){
 	if (c1 == '1' && c2 == '1'){
