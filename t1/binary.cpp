@@ -206,3 +206,13 @@ std::string timesBin(std::string n1,std::string times){
 	}
 	return finalTimes;
 }
+// Clean obsolete zeros function
+std::string cleanResult (std::string n1){
+	std::string s = n1;
+	for (char& c : s){
+		if (c == '1')
+			break;
+		c = '\0';
+	}
+	return s;
+}
