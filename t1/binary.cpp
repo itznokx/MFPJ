@@ -208,11 +208,10 @@ std::string timesBin(std::string n1,std::string times){
 }
 // Clean obsolete zeros function
 std::string cleanResult (std::string n1){
-	std::string s = n1;
-	for (char& c : s){
+	for (char& c : n1){
 		if (c == '1')
 			break;
 		c = '\0';
 	}
-	return s;
+	return n1;
 }
