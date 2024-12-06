@@ -77,6 +77,9 @@ std::string inverseBin (std::string binary){
 	return binary;
 }
 // 2's complement functions
+std::string onesComplement (std::string binary){
+	return inverseBin(binary);
+}
 std::string twosComplement (std::string binary){
 	std::string aux = inverseBin(binary);
 	return nextBin(aux);
@@ -172,16 +175,17 @@ std::string sumBin (std::string n1,std::string n2){
 	finalSum=vOut+finalSum;
 	return finalSum;
 }
-std::string difBin (std::string n1,std::string n2){
+std::string subBin (std::string n1,std::string n2){
 	char v1 = '0';
 	std::string finalSum;
-	auto [s1,s2] = equalizeN (n1,twosComplement(n2));
+	auto [s1,s2] = equalizeN (n1,n2);
+	s2 = onesComplement(s2);
 	for (int i = s1.length()-1; i>=0;--i){
 		auto[sum,vOut] = sumAux(s1[i],s2[i],v1);
 		finalSum= sum+finalSum;
 		v1 = vOut;
 	}
 	auto[sum,vOut] = sumAux(s1[0],s2[0],v1);
-	finalSum=vOut+finalSum;
+	finalSum = nextBin(finalSum);
 	return finalSum;
 }
