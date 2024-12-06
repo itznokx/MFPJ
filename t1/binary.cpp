@@ -1,13 +1,12 @@
 #include <iostream>
 #include <cmath>
 #include <tuple>
-using namespace std;
 // Aux functions
-string equalize (string b1,int x){
+std::string equalize (std::string b1,int x){
 	int counter = x-b1.length();
 
 	if (counter > 0){
-		string aux = "";
+		std::string aux = "";
 		while (counter > 0){
 			aux += '0';
 			--counter;
@@ -19,10 +18,10 @@ string equalize (string b1,int x){
 		return b1;
 	}
 }
-tuple<string,string> equalizeN (string bin1,string bin2){
-	int maxL = max(bin1.length(),bin2.length());
-	string s1 = equalize(bin1,maxL);
-	string s2 = equalize(bin2,maxL);
+std::tuple<std::string,std::string> equalizeN (std::string bin1,std::string bin2){
+	int maxL = std::max(bin1.length(),bin2.length());
+	std::string s1 = equalize(bin1,maxL);
+	std::string s2 = equalize(bin2,maxL);
 	return std::make_tuple(s1,s2);
 }
 // Validation Binary functions
@@ -32,15 +31,15 @@ bool validationChar (char c){
 	}
 	return false;
 }
-bool validation (string binary){
+bool validation (std::string binary){
 	for (int i = 0;i<binary.length();i++){
 		if (validationChar(binary[i])==false)
 			return false;
 	}
 	return true;
 }
-string validationWithString (string binary){
-	string aux = "";
+std::string validationWithString (std::string binary){
+	std::string aux = "";
 	for (int i = 0;i<binary.length();i++){
 		if (validationChar(binary[i])==false){
 			aux += "v";
@@ -52,7 +51,7 @@ string validationWithString (string binary){
 	return aux;
 }
 // Sucessor Binary function
-string nextBin (string binary){
+std::string nextBin (std::string binary){
 	int i;
 	for (i = binary.length()-1;i >= 0; i--){
 		if (binary[i] == '0'){
@@ -68,7 +67,7 @@ string nextBin (string binary){
 	return binary;
 }
 // Inverse Binary function
-string inverseBin (string binary){
+std::string inverseBin (std::string binary){
 	for (int i = 0;i<binary.length();i++){
 		if (binary[i] == '0')
 			binary[i] = '1';
@@ -78,13 +77,25 @@ string inverseBin (string binary){
 	return binary;
 }
 // 2's complement functions
-string twosComplement (string binary){
-	string aux = inverseBin(binary);
+std::string twosComplement (std::string binary){
+	std::string aux = inverseBin(binary);
 	return nextBin(aux);
 }
 // Binary operations auxiliars
+char notChar (char c1){
+	if (c1=='0')
+		return '1';
+	else 
+		return '0';
+}
 char andChar (char c1,char c2){
 	if (c1=='1'&&c2=='1')
+		return '1';
+	else
+		return '0';
+}
+char andChar (char c1,char c2,char c3){
+	if (c1=='1'&&c2=='1'&&c3=='1')
 		return '1';
 	else
 		return '0';
@@ -95,65 +106,69 @@ char orChar (char c1,char c2){
 	else
 		return '1';
 }
+char orChar (char c1,char c2,char c3){
+	if (c1=='0'&&c2=='0'&&c3=='0')
+		return '0';
+	else
+		return '1';
+}
+char orChar (char c1,char c2,char c3,char c4){
+	if (c1=='0'&&c2=='0'&&c3=='0'&&c4=='0')
+		return '0';
+	else
+		return '1';
+}
 char xorChar(char c1,char c2){
 	if (c1==c2)
 		return '0';
 	else
 		return '1';
 }
+// operator overloading
+
 // Binary operations
-string andBin (string bin1,string bin2){
+std::string andBin (std::string bin1,std::string bin2){
 	auto [s1,s2] = equalizeN(bin1,bin2);
-	string final;
+	std::string final;
 	for (int i = 0; i<s1.length();i++){
 		final += andChar(s1[i],s2[i]);
 	}
 	return final;
 }
-string orBin (string bin1,string bin2){
+std::string orBin (std::string bin1,std::string bin2){
 	auto [s1,s2] = equalizeN(bin1,bin2);
-	string final;
+	std::string final;
 	for (int i = 0; i<s1.length();i++){
 		final += orChar(s1[i],s2[i]);
 	}
 	return final;
 }
-string xorBin (string bin1,string bin2){
+std::string xorBin (std::string bin1,std::string bin2){
 	auto [s1,s2] = equalizeN(bin1,bin2);
-	string final;
+	std::string final;
 	for (int i = 0; i<s1.length();i++){
 		final += xorChar(s1[i],s2[i]);
 	}
 	return final;
 }
 // Mathematical Binary Operations
-tuple<char,int> sumAux (char c1,char c2,int v1){
-	if (c1 == '1' && c2 == '1'){
-		if (v1 == 1)
-			return {'k',1};
-		else
-			return {'0',1};
-	}
-	if (c1=='0' && c2 == '0'){
-		if (v1 == 1)
-			return {'w',0};
-		else
-			return {'0',0};
-	}
-	if (v1 == 1)
-		return {'0',1};
-	else
-		return {'q',0};
+std::tuple<char,char> sumAux (char c1,char c2,char v1){
+	char sum = xorChar(v1,xorChar(c1,c2));
+	char vOut = orChar(andChar(c1,c2),andChar(c1,v1),andChar(c2,v1));
+	printf("%c + %c + %c\n",c1,c2,v1 );printf("sum = %c \nvOut = %c \n\n",sum,vOut);
+	return {sum,vOut};
 }
 // Sum
-string sumBin (string n1,string n2){
-	int v1 = 0;
-	string finalSum;
+std::string sumBin (std::string n1,std::string n2){
+	char v1 = '0';
+	std::string finalSum;
 	auto [s1,s2] = equalizeN (n1,n2);
-	for (int i = s1.length(); i>=0;--i){
-		auto[c,vaux] = sumAux(s1[i],s2[i],v1);
-		finalSum+= c;
-		v1 = vaux;
+	for (int i = s1.length()-1; i>=0;--i){
+		auto[sum,vOut] = sumAux(s1[i],s2[i],v1);
+		finalSum= sum+finalSum;
+		v1 = vOut;
 	}
+	auto[sum,vOut] = sumAux(s1[0],s2[0],v1);
+	finalSum=vOut+finalSum;
 	return finalSum;
 }

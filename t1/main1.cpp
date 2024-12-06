@@ -4,8 +4,8 @@
 using namespace std;
 
 int main (void){
-	string number1 = "10101010";
-	string number2 = "11001100";
+	string number1 = "11000111100";
+	string number2 = "101010";
 	/* // Validation test
 	if (validation(number) == true)
 		cout << "Is Binary" << endl;
@@ -15,6 +15,8 @@ int main (void){
 	// Sucessor test
 	//cout << nextBin(number) << endl;
 	//cout << inverseBin (number) << endl;
+	auto [s1,s2] = equalizeN(number1,number2);
+	cout << s1 << " +" << endl << s2 << endl;
 	cout << sumBin(number1,number2) << endl ;
 	return 0;
 }
