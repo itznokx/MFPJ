@@ -155,7 +155,7 @@ std::string xorBin (std::string bin1,std::string bin2){
 std::tuple<char,char> sumAux (char c1,char c2,char v1){
 	char sum = xorChar(v1,xorChar(c1,c2));
 	char vOut = orChar(andChar(c1,c2),andChar(c1,v1),andChar(c2,v1));
-	printf("%c + %c + %c\n",c1,c2,v1 );printf("sum = %c \nvOut = %c \n\n",sum,vOut);
+	//printf("%c + %c + %c\n",c1,c2,v1 );printf("sum = %c \nvOut = %c \n\n",sum,vOut);
 	return {sum,vOut};
 }
 // Sum
