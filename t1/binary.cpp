@@ -161,7 +161,7 @@ std::tuple<char,char> sumAux (char c1,char c2,char v1){
 	//printf("%c + %c + %c\n",c1,c2,v1 );printf("sum = %c \nvOut = %c \n\n",sum,vOut);
 	return {sum,vOut};
 }
-// Sum
+// Binary Sum
 std::string sumBin (std::string n1,std::string n2){
 	char v1 = '0';
 	std::string finalSum;
@@ -175,6 +175,7 @@ std::string sumBin (std::string n1,std::string n2){
 	finalSum=vOut+finalSum;
 	return finalSum;
 }
+// Binary Subtraction
 std::string subBin (std::string n1,std::string n2){
 	char v1 = '0';
 	std::string finalSum;
@@ -188,4 +189,20 @@ std::string subBin (std::string n1,std::string n2){
 	auto[sum,vOut] = sumAux(s1[0],s2[0],v1);
 	finalSum = nextBin(finalSum);
 	return finalSum;
+}
+// Binary Multiplication
+std::string timesBin(std::string n1,std::string times){
+	std::string counter = "1";
+	std::string finalTimes;
+	if (stoi(times)==0)
+		return "0";
+	if (stoi(times)==1)
+		return n1;
+	finalTimes = n1;
+	while (counter != times){
+	//	std::cout << counter << std::endl;
+		finalTimes = sumBin(finalTimes,n1);
+		counter = nextBin(counter);
+	}
+	return finalTimes;
 }

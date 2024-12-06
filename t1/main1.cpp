@@ -5,7 +5,7 @@ using namespace std;
 
 int main (void){
 	string number1 = "11101110";
-	string number2 = "1011011";
+	string number2 = "111";
 	/* // Validation test
 	if (validation(number) == true)
 		cout << "Is Binary" << endl;
@@ -16,8 +16,8 @@ int main (void){
 	//cout << nextBin(number) << endl;
 	//cout << inverseBin (number) << endl;
 	auto [s1,s2] = equalizeN(number1,number2);
-	cout << s1 << " -" << endl << s2 << endl;
+	cout << s1 << " x" << endl << s2 << endl;
 	cout << "-------------------------------" << endl;
-	cout << subBin(number1,number2) << endl ;
+	cout << timesBin(number1,number2) << endl ;
 	return 0;
 }
