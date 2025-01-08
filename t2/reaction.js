@@ -26,7 +26,7 @@ class Vec2{
   size(){
     return sqrt(this.dot(this))
   }
-  unit(){
+  normalize(){
     let invLenght = 1.0 / this.size()
     return this.mult(invLenght);
   }
@@ -34,7 +34,7 @@ class Vec2{
     return new Vec2(this.x-v2.x,this.y-v2.y);
   }
   decompose(n){
-    let nu = n.unit()
+    let nu = n.normalize()
     let vn = n.mult(this.dot(nu))
     return [vn,this.dif(vn)]
   }
@@ -61,7 +61,9 @@ function draw(){
     seta(0,0, R*cos(ang), R*sin(ang))
   */
   colore(128,128,128)
-  rect(-200,94,400,10)
+  strokeWeight(14)
+  line(-width/2,100,width/2,100)
+  strokeWeight(1)
   let vmouse = new Vec2(0,0)
   let n = new Vec2(0,-30);
   n.pos = new Vec2(-100,94);
