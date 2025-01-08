@@ -34,9 +34,10 @@ class Vec2{
     return new Vec2(this.x-v2.x,this.y-v2.y);
   }
   decompose(n){
-    let nu = n.normalize()
-    let vn = n.mult(this.dot(nu))
-    return [vn,this.dif(vn)]
+    let num = this.dot(n);
+    let den = n.dot(n);
+    let vn = n.mult(num/den);
+    return [vn, this.dif(n)]
   }
   reaction(n,alfa,beta){
     let [vn,vp] = this.decompose(n)
