@@ -33,14 +33,15 @@ class Vec2{
   dif (v2){
     return new Vec2(this.x-v2.x,this.y-v2.y);
   }
-  decompose(n){
-    let num = this.dot(n);
+  projection(n){
+    let v = new Vec2(this.x,this.y)
+    let num = v.dot(n);
     let den = n.dot(n);
-    let vn = n.mult(num/den);
-    return [vn, this.dif(n)]
+    let vn = n.mult(v.dot(n))
+    return [vn, v.dif(vn)]
   }
   reaction(n,alfa,beta){
-    let [vn,vp] = this.decompose(n)
+    let [vn,vp] = this.projection(n)
     let rx = alfa*vp.x - beta*vn.x
     let ry = alfa*vp.y - beta*vn.y
     return new Vec2(rx,ry)
@@ -74,12 +75,12 @@ function draw(){
   vmouse.y = mouseYC
   vmouse.cor = [0,0,128]
   vmouse.render()
-  let [vn,vp] = vmouse.decompose(n)
+  let [vn,vp] = vmouse.projection(n)
   vn.cor = [128,128,128]
   vp.cor = [128,128,128]
   vn.render();
   vp.render();
-  let alfa = 0.8;
+  let alfa = 1;
   let beta = 1;
   let r = vmouse.reaction(n,alfa,beta);
   r.cor = [128,0,128]
