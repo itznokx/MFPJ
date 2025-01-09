@@ -24,7 +24,7 @@ class Vec{
   }
   // Produto Escalar (dot product)
   dot (v2){
-    return this.x*v2.x+this.y+v2.y+this.z+v2.z;
+    return this.x*v2.x+this.y*v2.y+this.z*v2.z;
   }
   // Produto Vetorial (cross product)
   cross (v2){
