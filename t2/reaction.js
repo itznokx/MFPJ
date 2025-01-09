@@ -21,7 +21,8 @@ class Vec2{
   }
   // Produto Escalar (dot product)
   dot (v2){
-    return (this.x*v2.x+this.y+v2.y);
+    let scalar = this.x*v2.x+this.y*v2.y
+    return scalar
   }
   size(){
     return sqrt(this.dot(this))
@@ -31,14 +32,16 @@ class Vec2{
     return this.mult(invLenght);
   }
   dif (v2){
-    return new Vec2(this.x-v2.x,this.y-v2.y);
+    return new Vec2(this.x - v2.x,this.y - v2.y);
   }
   projection(n){
     let v = new Vec2(this.x,this.y)
     let num = v.dot(n);
     let den = n.dot(n);
-    let vn = n.mult(v.dot(n))
-    return [vn, v.dif(vn)]
+    let div = num/den
+    let vn = n.mult(div)
+    let vp = v.dif(vn)
+    return [vn, vp]
   }
   reaction(n,alfa,beta){
     let [vn,vp] = this.projection(n)
@@ -68,7 +71,7 @@ function draw(){
   strokeWeight(1)
   let vmouse = new Vec2(0,0)
   let n = new Vec2(0,-30);
-  n.pos = new Vec2(-100,94);
+  n.pos = new Vec2(-100,95);
   n.cor = [255,0,0]
   n.render()
   vmouse.x = mouseXC
