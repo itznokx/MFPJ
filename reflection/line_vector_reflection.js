@@ -16,6 +16,9 @@ class Vec2{
            this.pos.x+this.x,
            this.pos.y+this.y);
   }
+  sum (v2){
+    return new Vec2(this.x+v2.x,this.y+v2.y)
+  }
   mult (k){
     return new Vec2(this.x*k,this.y*k);
   }
@@ -58,11 +61,11 @@ function intersect(A,B,C,D){
   let AB = B.dif(A);
   let AC = C.dif(A);
   let AD = D.dif(A);
-  let CA = A.dif(C);
-  let CB = B.dif(C);
-  let CD = D.dif(C);
   let cond1 = (AB.cross(AC))*(AB.cross(AD));
   if (cond1 > 0){
+    let CA = A.dif(C);
+    let CB = B.dif(C);
+    let CD = D.dif(C);
     let cond2 = (CD.cross(CB))*(CD.cross(CA));
     if (cond2 > 0)
       return false;
@@ -112,7 +115,13 @@ function draw(){
     let beta = 1;
     let r = vmouse.reaction(n,alfa,beta);
     r.cor = [128,0,128]
-    r.pos = new Vec2(vp.x,100)
+    let dr = D.dif(C)
+    dr.normalize()
+    let v = A.dif(C)
+    let ti = (-1)*(v.dot(n)/dr.dot(n))
+    dr.mult(ti)
+    let aux = C.sum(dr)
+    r.pos = new Vec2(aux.x,100)
     r.render() 
   }
 }
