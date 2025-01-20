@@ -106,7 +106,7 @@ function draw(){
   vp.render();
   if (intersect(A,B,C,D)==true){
     let alfa = 1;
-    let beta = 1;
+    let beta = 0.5;
     let r = vmouse.reaction(n,alfa,beta);
     r.cor = [128,0,128]
     let dr = D.dif(C)
@@ -117,7 +117,7 @@ function draw(){
     point(dr.x*ti,dr.y*ti)
     strokeWeight(1)
     let aux = C.sum(dr)
-    r.pos = new Vec2(dr.x*ti,100)
+    r.pos = new Vec2(dr.x*ti,dr.y*ti)
     r.render() 
   }
 }
