@@ -82,12 +82,6 @@ function setup(){
 
 function draw(){
   goCartesian()  
-  /*
-  colore(196, 128) 
-  var R = 128
-  for( ang=0; ang<2*PI; ang += PI/36)
-    seta(0,0, R*cos(ang), R*sin(ang))
-  */
   colore(128,128,128)
   strokeWeight(2)
   let A = new Vec2(-width/2,100)
@@ -118,10 +112,12 @@ function draw(){
     let dr = D.dif(C)
     dr.normalize()
     let v = A.dif(C)
-    let ti = (-1)*(v.dot(n)/dr.dot(n))
-    dr.mult(ti)
+    let ti = (v.dot(n)/dr.dot(n))
+    strokeWeight(10)
+    point(dr.x*ti,dr.y*ti)
+    strokeWeight(1)
     let aux = C.sum(dr)
-    r.pos = new Vec2(aux.x,100)
+    r.pos = new Vec2(dr.x*ti,100)
     r.render() 
   }
 }
@@ -141,19 +137,12 @@ function goCartesian()
   translate(width/2,height/2)
   scale(1,-1,1)  
 }
-
-/// Atualiza as variáveis globais com as coordenadas do mouse no plano cartesiano
 function grabMouse()
 {
   mouseXC = mouseX - width/2
   mouseYC = height/2 - mouseY
 }
 
-/** Renderiza texto corretamente no plano cartesiano
- *  @param str Texto a ser escrito
- *  @param x Posição horizontal do canto inferior esquerdo texto
- *  @param y Posição vertical do canto inferior esquerdo texto
- */
 function texto(str,x,y)
 {
   push()
@@ -165,15 +154,6 @@ function texto(str,x,y)
     text(str,x,y)
   pop()
 }
-
-
-/* Define as cores de preenchimento e de contorno com o mesmo valor.
- * Há várias opções de trabalho em RGB nesse caso:
- *  - caso c1,c2,c3 e c4 sejam passados, o efeito padrão é uma cor RGBA
- *  - caso c1,c2 e c3 sejam passados, tem-se uma cor RGB.
- *  - caso c1 e c2 sejam passados, c1 é um tom de cinza e c2 é opacidade.
- *  - caso apenas c1 seja passado, c1 é um tom de cinza.
- */
 function colore(c1,c2,c3,c4)
 {
   if(c4 != null)
@@ -201,8 +181,6 @@ function colore(c1,c2,c3,c4)
   }    
 }
 
-/* Desenha um segmento de reta com seta do ponto (x1,y1) para (x2,y2)
- */
 function seta(x1,y1,x2,y2)
 {
   // o segmento de reta
