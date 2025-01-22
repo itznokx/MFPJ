@@ -85,20 +85,21 @@ function intersect(A,B,C,D){
 var mouseXC, mouseYC = 0
 //Particula
 let pos = new Vec2(0,0)
-let vel = new Vec2(64,36)
+let dr = new Vec2(64,36)
+let vel = 3
 let edges = []
 
 let alfa = 1;
 let beta = 1;
 function setup(){
   createCanvas(400,400)
-  frameRate(1)
-  
+  frameRate(60)
+  dr = dr.normalize()
 }
 function draw(){
   goCartesian() 
   let w2 = width/2;
-  pos = pos.sum(vel);
+  pos = pos.sum(dr.mult(vel));
   let minT = Infinity;
   /*
   for (let i=0;i<edges.lenght;i++){
@@ -120,8 +121,8 @@ function draw(){
       
     }
   }*/
-  vel.pos = pos;
-  vel.render()
+  dr.pos = pos;
+  dr.render()
   circle(pos.x,pos.y,10)
 }
 
