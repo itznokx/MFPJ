@@ -123,7 +123,7 @@ function draw(){
   let colisao = false;
   for (let i=0;i<edges.lenght;i++){
     let ei = edges[i]
-    if (intersects,pos,pos2,ei[0],ei[1]){
+    if (intersect(dr,dr.pos,ei[0],ei[1]),pos,pos2,ei[0],ei[1]){
       let nC = ei[1].sub(ei[0]).rot90()
       let q = ei[0]
       let t = linePlaneIntersection(pos,pos2,q,nC)
@@ -138,7 +138,14 @@ function draw(){
       line(pos.x,pos.y,pos2.x,pos2.y)
     }
   }
-  
+  if (!colisao){
+    pos = pos2
+  }else{
+    let t = minT*0.9999
+    let p1 = pos;
+    let p2 = pos2;
+    let pt = p1.add(p2.sub(p1).mult(t));
+  }
   colore(0)
   
   dr.pos = pos;
