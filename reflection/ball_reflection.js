@@ -118,9 +118,9 @@ function draw(){
   strokeWeight(1)
   
   let w2 = width/2;
-  pos = pos.sum(dr.mult(vel));
+  let pos2 = pos.sum(dr.mult(vel));
   let minT = Infinity;
-  /*
+  let colisao = false;
   for (let i=0;i<edges.lenght;i++){
     let ei = edges[i]
     if (intersects,pos,pos2,ei[0],ei[1]){
@@ -136,12 +136,14 @@ function draw(){
       stroke(255,0,0)
       strokeWeight(3)
       line(pos.x,pos.y,pos2.x,pos2.y)
-    }else{
-      
     }
-  }*/
+  }
+  
+  colore(0)
+  
   dr.pos = pos;
   dr.render()
+  
   circle(pos.x,pos.y,10)
 }
 
