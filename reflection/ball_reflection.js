@@ -86,7 +86,7 @@ var mouseXC, mouseYC = 0
 //Particula
 let pos = new Vec2(0,0)
 let dr = new Vec2(64,36)
-let vel = 3
+let vel = 0.01
 let edges = []
 
 let alfa = 1;
@@ -94,10 +94,29 @@ let beta = 1;
 function setup(){
   createCanvas(400,400)
   frameRate(60)
-  dr = dr.normalize()
+  edges.push([new Vec2 (-width/2,height/2),
+              new Vec2 (-width/2,-height/2)
+             ])
+  edges.push([new Vec2 (width/2,height/2),
+              new Vec2 (width/2,-height/2)
+             ])
+  edges.push([new Vec2 (width/2,height/2),
+              new Vec2 (-width/2,height/2)
+              ])
+  edges.push([new Vec2 (width/2,-height/2),
+              new Vec2 (-width/2,-height/2)
+              ])
 }
 function draw(){
   goCartesian() 
+  strokeWeight(2)
+  line(-width/2,height/2,-width/2,-height/2)
+  line(width/2,height/2,width/2,-height/2)
+  line(width/2,height/2,-width/2,height/2)
+  colore(255,0,0)
+  line(width/2,-height/2,-width/2,-height/2)
+  strokeWeight(1)
+  
   let w2 = width/2;
   pos = pos.sum(dr.mult(vel));
   let minT = Infinity;
@@ -134,9 +153,9 @@ function goCartesian()
   mouseYC = height/2 - mouseY
   
   colore(128,0,0)
-  seta(0,height/2,width, height/2)
+  //seta(0,height/2,width, height/2)
   colore(0,128,0)
-  seta(width/2,height,width/2, 0)
+  //seta(width/2,height,width/2, 0)
   
   translate(width/2,height/2)
   scale(1,-1,1)  
