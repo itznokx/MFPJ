@@ -2,3 +2,4 @@
 *.out
 *.zip
 reflection/local_project_ballreflection/node_modules/*
+reflection/local_project_ballreflection/node_modules/*.json
