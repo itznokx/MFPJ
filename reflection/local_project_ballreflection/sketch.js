@@ -1,3 +1,4 @@
+//import {sexo} from './vec2.js'
 class Vec2{
   constructor(x,y){
     this.x = x;
@@ -108,8 +109,9 @@ function setup(){
               ])
 }
 function draw(){
-  goCartesian() 
+  goCartesian()
   strokeWeight(2)
+  //point(mouseXC,mouseYC);
   line(-width/2,height/2,-width/2,-height/2)
   line(width/2,height/2,width/2,-height/2)
   line(width/2,height/2,-width/2,height/2)
@@ -146,7 +148,7 @@ function draw(){
     let p2 = pos2;
     let pt = p1.add(p2.sub(p1).mult(t));
   }
-  colore(0)
+  colore(255,0,255)
   
   dr.pos = pos;
   dr.render()
