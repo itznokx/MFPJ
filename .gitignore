@@ -1,3 +1,4 @@
 *.o
 *.out
 *.zip
+reflection/local_project_ballreflection/node_modules/*
