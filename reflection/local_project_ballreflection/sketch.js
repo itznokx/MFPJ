@@ -1,4 +1,4 @@
-//import {sexo} from './vec2.js'
+//import Vec2 from './vec2.js'
 class Vec2{
   constructor(x,y){
     this.x = x;
