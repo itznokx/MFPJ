@@ -3,5 +3,5 @@
 *.zip
 reflection/local_project_ballreflection/node_modules/*
 reflection/local_project_ballreflection/node_modules/*.json
-reflection/local_project_ballreflection/node_modules/p5.js
-reflection/local_project_ballreflection/node_modules/p5.sound.js
+./reflection/local_project_ballreflection/node_modules/p5.js
+./reflection/local_project_ballreflection/node_modules/p5.sound.js
