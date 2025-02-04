@@ -1,4 +1,3 @@
-//import Vec2 from './vec2.js'
 class Vec2{
   constructor(x,y){
     this.x = x;
@@ -73,17 +72,20 @@ function intersect(A,B,C,D){
   let AB = B.dif(A);
   let AC = C.dif(A);
   let AD = D.dif(A);
-  let cond1 = (AB.cross(AC))*(AB.cross(AD));
-  if (cond1 > 0){
-    let CA = A.dif(C);
-    let CB = B.dif(C);
-    let CD = D.dif(C);
-    let cond2 = (CD.cross(CB))*(CD.cross(CA));
-    if (cond2 > 0)
-      return false;
-  }else{
+  let ABxAC = AB.cross(AC)
+  let ABxAD = AB.cross(AD)
+  let cond1 = ABxAC*ABxAD;
+  let CA = A.dif(C);
+  let CB = B.dif(C);
+  let CD = D.dif(C);
+  let CDxCA = CD.cross(CA)
+  let CDxCB = CD.cross(CB)
+  let cond2 = CDxCA*CDxCB;
+  if (cond1 < 0 && cond2 <0){
     return true
   }
+  return false
+ 
 }
 function arrayLenght(array) {
   let size = 0;
@@ -155,10 +157,6 @@ function draw(){
       line(pos.x,pos.y,pos2.x,pos2.y)
     }
   }
-  colore(0)
-  strokeWeight(10)
-  circle(pos.x,pos.y,20)
-  strokeWeight(1)
   if (!colisao){
     pos = pos2
   }else{
