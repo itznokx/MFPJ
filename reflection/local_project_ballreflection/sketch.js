@@ -60,13 +60,14 @@ class Vec2{
     return new Vec2(rx,ry)
   }
   rot90(){
-    return new Vec2 (-this.y,this.x);
+    return new Vec2 (this.y,(-1)*this.x);
   }
 }
 function linePlaneIntersection(p1,p2,q,n){
   let num = q.dif(p1).dot(n)
   let div = p2.dif(p2).dot(n)
-  return num/div
+  let final = num/div
+  return final
 }
 function intersect(A,B,C,D){
   let AB = B.dif(A);
@@ -136,7 +137,6 @@ function draw(){
   dr.pos = pos;
   let w2 = width/2;
   let pos2 = pos.sum(dr.mult(vel));
-  print(pos2)
   let edges_size = arrayLenght(edges)
   let minT = Infinity;
   let colisao = false;
@@ -146,6 +146,7 @@ function draw(){
       let nC = ei[1].dif(ei[0]).rot90()
       let q = ei[0]
       let t = linePlaneIntersection(pos,pos2,q,nC)
+      print(t)
       if (t<minT){
         let minT = t;
         n = nC;
@@ -153,20 +154,21 @@ function draw(){
       }
       colisao = true
       stroke(255,0,0)
-      strokeWeight(3)
+      strokeWeight(10)
       line(pos.x,pos.y,pos2.x,pos2.y)
     }
   }
   if (!colisao){
     pos = pos2
   }else{
+    print(minT)
     let t = minT*0.9999
     let p1 = pos;
     let p2 = pos2;
     let pt = p1.add(p2.dif(p1).mult(t));
   }
   colore(255,0,255)
-  
+  strokeWeight(1)
   circle(pos.x,pos.y,10)
   dr.pos = pos;
   dr.render()
