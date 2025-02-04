@@ -67,7 +67,6 @@ function linePlaneIntersection(p1,p2,q,n){
   let num = q.dif(p1).dot(n)
   let div = p2.dif(p1).dot(n)
   let final = num/div
-  print(num+"/"+div+"="+final)
   return final
 }
 function intersect(A,B,C,D){
@@ -114,12 +113,12 @@ let alfa = 1;
 let beta = 1;
 function setup(){
   createCanvas(400,400)
-  frameRate(1)
+  frameRate(60)
   edges.push([new Vec2 (-width/2,height/2),
               new Vec2 (-width/2,-height/2)
              ])
-  edges.push([new Vec2 ((width/2)-80,height/2),
-              new Vec2 ((width/2)-80,-height/2)
+  edges.push([new Vec2 ((width/2),height/2),
+              new Vec2 ((width/2),-height/2)
              ])
   edges.push([new Vec2 (width/2,height/2),
               new Vec2 (-width/2,height/2)
@@ -134,8 +133,6 @@ function draw(){
   //point(mouseXC,mouseYC);
   renderLines(edges)
   strokeWeight(1)
-  print(pos)
-  
   let pos2 = pos.sum(dr.mult(vel))
   let edges_size = arrayLenght(edges)
   let minT = Infinity;
@@ -148,7 +145,6 @@ function draw(){
       //nC = nC.normalize()
       let q = ei[0]
       let t = linePlaneIntersection(pos,pos2,q,nC)
-      print(t)
       /* // "Debug"
       print("pos: ["+pos.x+","+pos.y+"]")
       print("pos2: ["+pos2.x+","+pos2.y+"]")
@@ -161,7 +157,6 @@ function draw(){
         minT = t;
         n = nC;
         colIndex = i;
-        print(minT)
       }
       colisao = true
     }
@@ -169,7 +164,6 @@ function draw(){
   if (!colisao){
     pos = pos2
   }else{
-    print(minT)
     let tAux = minT*0.99
     let aux1 = dr.mult(tAux);
     let pt = pos.add(aux1)
