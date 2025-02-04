@@ -17,8 +17,14 @@ class Vec2{
            this.pos.x+this.x,
            this.pos.y+this.y);
   }
+  add (v2){
+    return new Vec2(this.x+v2.x,this.y+v2.y)
+  }
   sum (v2){
     return new Vec2(this.x+v2.x,this.y+v2.y)
+  }
+  dif (v2){
+    return new Vec2(this.x - v2.x,this.y - v2.y);
   }
   mult (k){
     return new Vec2(this.x*k,this.y*k);
@@ -38,9 +44,6 @@ class Vec2{
   cross (v2){
     let prod = this.x*v2.y - this.y*v2.x
     return prod;
-  }
-  dif (v2){
-    return new Vec2(this.x - v2.x,this.y - v2.y);
   }
   projection(n){
     let v = new Vec2(this.x,this.y)
@@ -62,8 +65,8 @@ class Vec2{
   }
 }
 function linePlaneIntersection(p1,p2,q,n){
-  let num = q.sub(p1).dot(n)
-  let div = p2.sub(p2).dot(n)
+  let num = q.dif(p1).dot(n)
+  let div = p2.dif(p2).dot(n)
   return num/div
 }
 function intersect(A,B,C,D){
@@ -82,19 +85,33 @@ function intersect(A,B,C,D){
     return true
   }
 }
+function arrayLenght(array) {
+  let size = 0;
+  while (edges[size]!=null){
+    size++
+  }
+  return size;
+}
+function renderLines(array){
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i++){
+    colore(0,255,0)
+    line(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
+  }
+}
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0
 //Particula
 let pos = new Vec2(0,0)
 let dr = new Vec2(64,36)
-let vel = 0.01
+let vel = 1
 let edges = []
 
 let alfa = 1;
 let beta = 1;
 function setup(){
   createCanvas(400,400)
-  frameRate(60)
+  frameRate(1)
   edges.push([new Vec2 (-width/2,height/2),
               new Vec2 (-width/2,-height/2)
              ])
@@ -112,21 +129,19 @@ function draw(){
   goCartesian()
   strokeWeight(2)
   //point(mouseXC,mouseYC);
-  line(-width/2,height/2,-width/2,-height/2)
-  line(width/2,height/2,width/2,-height/2)
-  line(width/2,height/2,-width/2,height/2)
-  colore(255,0,0)
-  line(width/2,-height/2,-width/2,-height/2)
+  renderLines(edges)
   strokeWeight(1)
-  
+  dr.pos = pos;
   let w2 = width/2;
   let pos2 = pos.sum(dr.mult(vel));
+  print(pos2)
+  let edges_size = arrayLenght(edges)
   let minT = Infinity;
   let colisao = false;
-  for (let i=0;i<edges.lenght;i++){
+  for (let i=0;i<edges_size;i++){
     let ei = edges[i]
-    if (intersect(dr,dr.pos,ei[0],ei[1]),pos,pos2,ei[0],ei[1]){
-      let nC = ei[1].sub(ei[0]).rot90()
+    if (intersect(pos,pos2,ei[0],ei[1])){
+      let nC = ei[1].dif(ei[0]).rot90()
       let q = ei[0]
       let t = linePlaneIntersection(pos,pos2,q,nC)
       if (t<minT){
@@ -140,20 +155,24 @@ function draw(){
       line(pos.x,pos.y,pos2.x,pos2.y)
     }
   }
+  colore(0)
+  strokeWeight(10)
+  circle(pos.x,pos.y,20)
+  strokeWeight(1)
   if (!colisao){
     pos = pos2
   }else{
     let t = minT*0.9999
     let p1 = pos;
     let p2 = pos2;
-    let pt = p1.add(p2.sub(p1).mult(t));
+    let pt = p1.add(p2.dif(p1).mult(t));
   }
   colore(255,0,255)
   
+  circle(pos.x,pos.y,10)
   dr.pos = pos;
   dr.render()
   
-  circle(pos.x,pos.y,10)
 }
 
 function goCartesian()
