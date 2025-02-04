@@ -53,7 +53,7 @@ class Vec2{
     let vp = v.dif(vn)
     return [vn, vp]
   }
-  reaction(n,alfa,beta){
+  reflection(n,alfa,beta){
     let [vn,vp] = this.projection(n)
     let rx = alfa*vp.x - beta*vn.x
     let ry = alfa*vp.y - beta*vn.y
@@ -65,8 +65,9 @@ class Vec2{
 }
 function linePlaneIntersection(p1,p2,q,n){
   let num = q.dif(p1).dot(n)
-  let div = p2.dif(p2).dot(n)
+  let div = p2.dif(p1).dot(n)
   let final = num/div
+  print(num+"/"+div+"="+final)
   return final
 }
 function intersect(A,B,C,D){
@@ -106,10 +107,9 @@ function renderLines(array){
 var mouseXC, mouseYC = 0
 //Particula
 let pos = new Vec2(0,0)
-let dr = new Vec2(64,36)
+let dr = new Vec2(32,18)
 let vel = 1
 let edges = []
-
 let alfa = 1;
 let beta = 1;
 function setup(){
@@ -118,8 +118,8 @@ function setup(){
   edges.push([new Vec2 (-width/2,height/2),
               new Vec2 (-width/2,-height/2)
              ])
-  edges.push([new Vec2 (width/2,height/2),
-              new Vec2 (width/2,-height/2)
+  edges.push([new Vec2 ((width/2)-80,height/2),
+              new Vec2 ((width/2)-80,-height/2)
              ])
   edges.push([new Vec2 (width/2,height/2),
               new Vec2 (-width/2,height/2)
@@ -134,38 +134,49 @@ function draw(){
   //point(mouseXC,mouseYC);
   renderLines(edges)
   strokeWeight(1)
-  dr.pos = pos;
-  let w2 = width/2;
-  let pos2 = pos.sum(dr.mult(vel));
+  print(pos)
+  
+  let pos2 = pos.sum(dr.mult(vel))
   let edges_size = arrayLenght(edges)
   let minT = Infinity;
   let colisao = false;
+  let colIndex = 0;
   for (let i=0;i<edges_size;i++){
     let ei = edges[i]
     if (intersect(pos,pos2,ei[0],ei[1])){
       let nC = ei[1].dif(ei[0]).rot90()
+      //nC = nC.normalize()
       let q = ei[0]
       let t = linePlaneIntersection(pos,pos2,q,nC)
       print(t)
+      /* // "Debug"
+      print("pos: ["+pos.x+","+pos.y+"]")
+      print("pos2: ["+pos2.x+","+pos2.y+"]")
+      print("normal: ["+nC.x+","+nC.y+"]")
+      print("q: "+q)
+      print("t: "+t)
+      print("------------------------------")
+      */
       if (t<minT){
-        let minT = t;
+        minT = t;
         n = nC;
         colIndex = i;
+        print(minT)
       }
       colisao = true
-      stroke(255,0,0)
-      strokeWeight(10)
-      line(pos.x,pos.y,pos2.x,pos2.y)
     }
   }
   if (!colisao){
     pos = pos2
   }else{
     print(minT)
-    let t = minT*0.9999
-    let p1 = pos;
-    let p2 = pos2;
-    let pt = p1.add(p2.dif(p1).mult(t));
+    let tAux = minT*0.99
+    let aux1 = dr.mult(tAux);
+    let pt = pos.add(aux1)
+    pos = pt;
+    let ei = edges[colIndex]
+    let nC = ei[1].dif(ei[0]).rot90()
+    dr = dr.reflection(nC,alfa,beta)
   }
   colore(255,0,255)
   strokeWeight(1)
