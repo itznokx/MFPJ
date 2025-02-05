@@ -105,15 +105,15 @@ function renderLines(array){
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0
 //Particula
-let pos = new Vec2(0,0)
-let dr = new Vec2(32,18)
-let vel = 1
-let edges = []
-let alfa = 1;
-let beta = 1;
+var pos = new Vec2(0,0)
+var dr = new Vec2(32,18)
+var vel = 1
+var edges = []
+var alfa = 1;
+var beta = 1;
 function setup(){
   createCanvas(400,400)
-  frameRate(60)
+  frameRate(24)
   edges.push([new Vec2 (-width/2,height/2),
               new Vec2 (-width/2,-height/2)
              ])
@@ -168,18 +168,28 @@ function draw(){
     let aux1 = dr.mult(tAux);
     let pt = pos.add(aux1)
     pos = pt;
+    colore(255,0,0)
+    circle(pos.x,pos.y,30)
     let ei = edges[colIndex]
     let nC = ei[1].dif(ei[0]).rot90()
     dr = dr.reflection(nC,alfa,beta)
+    nC = nC.normalize()
+    print(nC)
   }
-  colore(255,0,255)
+  colore(0)
   strokeWeight(1)
   circle(pos.x,pos.y,10)
   dr.pos = pos;
   dr.render()
   
 }
-
+function mouseClicked(){
+  let x1 = random(-width/2,width/2)
+  let x2 = random(-width/2,width/2)
+  let y1 = random(-height/2,height/2)
+  let y2 = random(-height/2,height/2)
+  edges.push([new Vec2(x1,y1),new Vec2(x2,y2)])
+}
 function goCartesian()
 {
   background(255)
