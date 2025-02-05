@@ -113,7 +113,7 @@ var alfa = 1;
 var beta = 1;
 function setup(){
   createCanvas(400,400)
-  frameRate(24)
+  frameRate(60)
   edges.push([new Vec2 (-width/2,height/2),
               new Vec2 (-width/2,-height/2)
              ])
