@@ -113,8 +113,12 @@ function renderLines(array){
     line(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
   }
 }
-function renderPoint(array){
-
+function renderPoints(array){
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i++){
+    colore(255,0,0)
+    circle(array[i].x,array[i].y,5)
+  }
 }
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0
@@ -131,9 +135,22 @@ function draw(){
   // desenha o fundo e configura o sistema cartesiano, simplificando o
   // processo de desenho das formas na tela
   goCartesian()
-  colore(0)
   renderLines(lines)
+  colore(0)
   circle(mouseXC,mouseYC,5)
+  print(arrayLenght(points))
+  if (arrayLenght(points)==1){
+    strokeWeight(2)
+    line(points[0].x,points[0].y,mouseXC,mouseYC)
+  }
+  if (arrayLenght(points)>1){
+    lines.push([new Vec2(points[0].x,points[0].y),
+                new Vec2(points[1].x,points[1].y)])
+    points = []
+  }
+}
+function mouseClicked(){
+  points.push(new Vec2(mouseXC,mouseYC))
 }
 function keyPressed(){
   if (key=='c'){
@@ -183,15 +200,6 @@ function texto(str,x,y)
     text(str,x,y)
   pop()
 }
-
-
-/* Define as cores de preenchimento e de contorno com o mesmo valor.
- * Há várias opções de trabalho em RGB nesse caso:
- *  - caso c1,c2,c3 e c4 sejam passados, o efeito padrão é uma cor RGBA
- *  - caso c1,c2 e c3 sejam passados, tem-se uma cor RGB.
- *  - caso c1 e c2 sejam passados, c1 é um tom de cinza e c2 é opacidade.
- *  - caso apenas c1 seja passado, c1 é um tom de cinza.
- */
 function colore(c1,c2,c3,c4)
 {
   if(c4 != null)
