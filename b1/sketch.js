@@ -160,6 +160,11 @@ function keyPressed(){
     let y2 = random(-height/2,height/2)
     lines.push([new Vec2(x1,y1),new Vec2(x2,y2)])
   }
+  if (key=='d'){
+    if (arrayLenght(lines)>0){
+      lines.pop()
+    }
+  }
 }
 function goCartesian()
 {
