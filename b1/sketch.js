@@ -173,7 +173,6 @@ function draw(){
   renderPoints(intersections)
   colore(0)
   circle(mouseXC,mouseYC,5)
-  print(arrayLenght(points))
   if (arrayLenght(points)==1){
     strokeWeight(2)
     line(points[0].x,points[0].y,mouseXC,mouseYC)
