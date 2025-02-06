@@ -111,7 +111,7 @@ function renderLines(array){
   for (let i=0;i<array_size;i++){
     colore(0,255,0)
     line(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
-  }
+  }pointOfIntersection
 }
 function renderPoints(array){
   let array_size = arrayLenght(array)
@@ -119,6 +119,38 @@ function renderPoints(array){
     colore(255,0,0)
     circle(array[i].x,array[i].y,5)
   }
+}
+function calculateIntersections(arrayX){
+  let finalInter = []
+  let array = arrayX
+  let array_size = arrayLenght(array)
+  for (let i=array_size-1;i>0;i--){
+    let A = array[i][0]
+    let B = array[i][1]
+    for (let j=0;j<array_size;j++){
+      if(j!=i){
+        let C = array[j][0]
+        let D = array[j][1]
+        if (intersect(A,B,C,D)){
+          let li = array[i]
+          let n = (B.dif(A)).rot90()
+          let t = linePlaneIntersection(C,D,A,n)
+          let dr = D.dif(C)
+          let pt = C.add(dr.mult(t))
+          finalInter.push(new Vec2(pt.x,pt.y))
+        }
+      }
+    }
+  }
+  return finalInter
+}
+function copyArray (array1){
+  let array2 = []
+  let array_size = arrayLenght(array1)
+  for (let i=0;i<array_size;i++){
+    array2.push(array1[i])
+  }
+  return array2
 }
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0
@@ -136,6 +168,9 @@ function draw(){
   // processo de desenho das formas na tela
   goCartesian()
   renderLines(lines)
+  let aux = copyArray(lines)
+  intersections = calculateIntersections(aux)
+  renderPoints(intersections)
   colore(0)
   circle(mouseXC,mouseYC,5)
   print(arrayLenght(points))
