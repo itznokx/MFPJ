@@ -11,3 +11,5 @@
  - O pseudoângulo do vetor no perímetro do quadrado (4 pontos)
  - O pseudoângulo entre dois vetores no quadrado, no intervalo [0,8) (1 ponto)
  - Seja visual e interativo (2 pontos extras)
+
+# Como usar

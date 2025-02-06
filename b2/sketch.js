@@ -95,7 +95,7 @@ function goPseudo(){
   line(-width/4,-height/4,width/4,-height/4)
   //l-sided line
   line(-width/4,height/4,-width/4,-height/4)
-  colore(0)
+  colore(32)
   texto("(-1,+1)",(-width/4)-45,(height/4))
   texto("(+1,+1)",(width/4)+10,(height/4))
   texto("(-1,-1)",(-width/4)-45,(-height/4))
