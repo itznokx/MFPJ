@@ -67,5 +67,95 @@ function setup(){
   createCanvas(400,400)
 }
 function draw(){
+  goCartesian()
+  goPseudo()
+}
+function goCartesian()
+{
+  background(255)
   
+  mouseXC = mouseX - width/2
+  mouseYC = height/2 - mouseY
+  
+  colore(128,0,0)
+  seta(0,height/2,width, height/2)
+  colore(0,128,0)
+  seta(width/2,height,width/2, 0)
+  
+  translate(width/2,height/2)
+  scale(1,-1,1)  
+}
+function goPseudo(){
+  //upper line
+  colore (64)
+  line(-width/4,height/4,width/4,height/4)
+  //r-sided line
+  line(width/4,height/4,width/4,-height/4)
+  //down line
+  line(-width/4,-height/4,width/4,-height/4)
+  //l-sided line
+  line(-width/4,height/4,-width/4,-height/4)
+  colore(0)
+  texto("(-1,+1)",(-width/4)-45,(height/4))
+  texto("(+1,+1)",(width/4)+10,(height/4))
+  texto("(-1,-1)",(-width/4)-45,(-height/4))
+  texto("(+1,-1)",(width/4)+10,(-height/4))
+}
+function grabMouse()
+{
+  mouseXC = mouseX - width/2
+  mouseYC = height/2 - mouseY
+}
+function texto(str,x,y)
+{
+  push()
+    translate( x, y)
+    scale(1,-1)
+    translate(-x,-y)
+  
+    // desenha o texto normalmente
+    text(str,x,y)
+  pop()
+}
+function colore(c1,c2,c3,c4)
+{
+  if(c4 != null)
+  {
+    fill(c1,c2,c3,c4)
+    stroke(c1,c2,c3,c4)
+    return
+  }
+  if(c3 != null)
+  {
+    fill(c1,c2,c3)
+    stroke(c1,c2,c3)
+    return
+  }
+  
+  if(c2 == null )
+  {
+    fill(c1)
+    stroke(c1)
+  }
+  else
+  {
+    fill(c1,c1,c1,c2)
+    stroke(c1,c1,c1,c2)
+  }    
+}
+function seta(x1,y1,x2,y2)
+{
+  // o segmento de reta
+  line(x1,y1,x2,y2)
+  var dx = x2-x1, dy = y2-y1
+  var le = sqrt(dx*dx + dy*dy) // comprimento do vetor
+  // o vetor v é unitário paralelo ao segmento, com mesmo sentido
+  var vx = dx/le, vy = dy/le
+  // o vetor u é unitário e perpendicular ao segmento
+  var ux = -vy
+  var uy = vx
+  // a cabeça triangular
+  triangle(x2,y2,
+           x2-5*vx+2*ux, y2-5*vy+2*uy,
+           x2-5*vx-2*ux, y2-5*vy-2*uy)
 }
