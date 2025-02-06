@@ -109,7 +109,7 @@ function arrayLenght(array) {
 function renderLines(array){
   let array_size = arrayLenght(array)
   for (let i=0;i<array_size;i++){
-    colore(0,255,0)
+    colore(0,0,0)
     line(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
   }pointOfIntersection
 }
