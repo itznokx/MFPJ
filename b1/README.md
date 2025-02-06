@@ -1,3 +1,15 @@
+# Descrição
+
+## Crie um programa que mostre quando dois segmentos de reta AB e CD se interceptam em 2D (10 pontos)
+- Use os cálculos vistos nos slides de aula
+- DICA: permita a entrada do usuário ou use um botão
+para randomizar os segmentos
+- DICA: use o kit básico que está no Material de Apoio do
+SOLAR como um ponto de partida
+
+## Desafios
+- Mostrar os pontos de interseção (0,5 pontos)
+- Retas degeneradas (1 ponto) e paralelas (1 ponto)
 # Como utilizar
 
 ## Execução do projeto
