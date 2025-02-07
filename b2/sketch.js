@@ -176,13 +176,13 @@ function calculateIntersections2(array1,array2){
 // ambos vetores DEVEM estar normalizados
 // |u|.|v|.cos(B)
 function calculateAnglesE(v1,v2){
-  return acos(v1.dot(v2))
+  return abs(acos(v1.dot(v2)))
 }
 // calcular angulos por produto vetorial
 // ambos vetores DEVEM estar normalizados
 // |u|.|v|.sen(B)
 function calculateAnglesV(v1,v2){
-  return asin(v1.cross(v2))
+  return abs(asin(v1.cross(v2)))
 }
 function calculateQuadrant(ponto){
   let x = ponto.x
