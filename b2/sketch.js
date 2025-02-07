@@ -172,6 +172,18 @@ function calculateIntersections2(array1,array2){
   }
   return finalInter
 }
+// calcular angulos por produto escalar
+// ambos vetores DEVEM estar normalizados
+// |u|.|v|.cos(B)
+function calculateAnglesE(v1,v2){
+  return acos(v1.dot(v2))
+}
+// calcular angulos por produto vetorial
+// ambos vetores DEVEM estar normalizados
+// |u|.|v|.sen(B)
+function calculateAnglesV(v1,v2){
+  return asin(v1.cross(v2))
+}
 function calculateQuadrant(ponto){
   let x = ponto.x
   let y = ponto.y
@@ -239,6 +251,8 @@ function draw(){
     //print("["+CD.x+","+CD.y+"]")
     print(calculateQuadrant(AB))
     print(calculateQuadrant(CD))
+    print("Angulo E: "+calculateAnglesE(AB,CD))
+    print("Angulo V: "+calculateAnglesV(AB,CD))
     
   }
   texto("(-1,+1)",(-width/4)-45,(height/4))
@@ -250,7 +264,6 @@ function mouseClicked(){
   if (arrayLenght(lines)<2){
     lines.push([new Vec2(0,0),new Vec2(mouseXC,mouseYC)])
   }
-  
 }
 function keyPressed(){
   if (key=='d'){
