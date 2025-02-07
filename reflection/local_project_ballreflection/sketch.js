@@ -113,7 +113,7 @@ var alfa = 1;
 var beta = 1;
 function setup(){
   createCanvas(1600,900)
-  frameRate(120)
+  frameRate(24)
   edges.push([new Vec2 (-width/2,height/2),
               new Vec2 (-width/2,-height/2)
              ])
@@ -189,6 +189,13 @@ function mouseClicked(){
   let y1 = random(-height/2,height/2)
   let y2 = random(-height/2,height/2)
   edges.push([new Vec2(x1,y1),new Vec2(x2,y2)])
+}
+function keyPressed(){
+  if (key=='d'){
+    if (arrayLenght(edges)>0){
+      edges.pop()
+    }
+  }
 }
 function goCartesian()
 {
