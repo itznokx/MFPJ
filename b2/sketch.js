@@ -111,13 +111,20 @@ function renderLines(array){
   for (let i=0;i<array_size;i++){
     colore(0,0,0)
     line(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
-  }pointOfIntersection
+  }
 }
 function renderPoints(array){
   let array_size = arrayLenght(array)
   for (let i=0;i<array_size;i++){
     colore(255,0,0)
     circle(array[i].x,array[i].y,5)
+  }
+}
+function renderSeta(array){
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i++){
+    colore(0,0,0)
+    seta(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
   }
 }
 function calculateIntersections(array){
@@ -143,25 +150,23 @@ function calculateIntersections(array){
   }
   return finalInter
 }
-function calculateIntersections2(array1,arary2){
+function calculateIntersections2(array1,array2){
   let finalInter = []
   let array1_size = arrayLenght(array1)
-  let array2_size = arrayLenght(arary2)
-  for (let i=0;i<array1_size;i--){
+  let array2_size = arrayLenght(array2)
+  for (let i=0;i<array1_size;i++){
     let A = array1[i][0]
     let B = array1[i][1]
     for (let j=0;j<array2_size;j++){
-      if(j!=i){
-        let C = array2[j][0]
-        let D = array2[j][1]
-        if (intersect(A,B,C,D)){
-          let li = array[i]
-          let n = (B.dif(A)).rot90()
-          let t = linePlaneIntersection(C,D,A,n)
-          let dr = D.dif(C)
-          let pt = C.add(dr.mult(t))
-          finalInter.push(new Vec2(pt.x,pt.y))
-        }
+      let C = array2[j][0]
+      let D = array2[j][1]
+      if (intersect(A,B,C,D)){
+        let li = array1[i]
+        let n = (B.dif(A)).rot90()
+        let t = linePlaneIntersection(C,D,A,n)
+        let dr = D.dif(C)
+        let pt = C.add(dr.mult(t))
+        finalInter.push(new Vec2(pt.x,pt.y))
       }
     }
   }
@@ -179,7 +184,14 @@ function setup(){
 }
 function draw(){
   goCartesian()
+  intersections = calculateIntersections2(boxLines,lines)
   renderLines(boxLines)
+  renderSeta(lines)
+  renderPoints(intersections)
+  colore(0)
+  if (arrayLenght(lines)<2){
+    seta(0,0,mouseXC,mouseYC)
+  }
   texto("(-1,+1)",(-width/4)-45,(height/4))
   texto("(+1,+1)",(width/4)+10,(height/4))
   texto("(-1,-1)",(-width/4)-45,(-height/4))
