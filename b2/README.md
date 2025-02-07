@@ -3,6 +3,7 @@
 ## Escreva um programa que calcule o ângulo entre dois vetores 2D (4 pontos)
  - Usando o produto escalar
  - Usando o produto vetorial
+
 ## Pontos de atenção (1 ponto extra)
  - Verifique se os vetores são nulos ou não
  - Evitar que ocorra Inf ou NaN nos seus cálculos
@@ -18,3 +19,7 @@
  - Se você quiser executar o código pelo [P5.js Web Editor](https://editor.p5js.org/) apenas copie o código do arquivo [sketch.js]{} e depois execute o código normalmente.
 
  - Se quiser executar o código localmente, apenas abra o arquivo index.html com um navegador de sua preferência (aconselho o `firefox` )
+
+## Uso do Algoritimo
+ - Pressione o botão `MOUSE_LEFT` para criar um vetor
+ - Pressiona `d` para deletar o último vetor criado
