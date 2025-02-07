@@ -172,6 +172,46 @@ function calculateIntersections2(array1,array2){
   }
   return finalInter
 }
+function calculateQuadrant(ponto){
+  let x = ponto.x
+  let y = ponto.y
+  //1,2
+  if (x >=0 && y >=0){
+    if (x>y){
+      return 1
+    }
+    if (x<y){
+      return 2
+    }
+  }
+ // 3,4
+ if (x < 0 && y >=0){
+  if (-x>y){
+      return 4
+    }
+    if (-x<y){
+      return 3
+    }
+ }
+ // 5,6
+ if (x < 0 && y < 0){
+  if (x>y){
+      return 6
+    }
+    if (x<y){
+      return 5
+    }
+ }
+ // 7,8
+ if (x >= 0 && y < 0){
+    if (x>-y){
+      return 8
+    }
+    if (x<-y){
+      return 7
+    }
+ }
+}
 var lines = []
 var boxLines = []
 var intersections = []
@@ -195,8 +235,11 @@ function draw(){
   if (arrayLenght(lines)==2){
     let AB = lines[0][1].dif(lines[0][0]).normalize()
     let CD = lines[1][1].dif(lines[1][0]).normalize()
-    print("["+AB.x+","+AB.y+"]")
-    print("["+CD.x+","+CD.y+"]")
+    //print("["+AB.x+","+AB.y+"]")
+    //print("["+CD.x+","+CD.y+"]")
+    print(calculateQuadrant(AB))
+    print(calculateQuadrant(CD))
+    
   }
   texto("(-1,+1)",(-width/4)-45,(height/4))
   texto("(+1,+1)",(width/4)+10,(height/4))
@@ -231,7 +274,7 @@ function goCartesian()
   translate(width/2,height/2)
   scale(1,-1,1)  
 }
-function grabMouse()
+function grCDMouse()
 {
   mouseXC = mouseX - width/2
   mouseYC = height/2 - mouseY
