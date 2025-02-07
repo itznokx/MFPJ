@@ -106,14 +106,14 @@ function renderLines(array){
 var mouseXC, mouseYC = 0
 //Particula
 var pos = new Vec2(0,0)
-var dr = new Vec2(32,18)
+var dr = new Vec2(48,32)
 var vel = 1
 var edges = []
 var alfa = 1;
 var beta = 1;
 function setup(){
-  createCanvas(400,400)
-  frameRate(60)
+  createCanvas(1600,900)
+  frameRate(120)
   edges.push([new Vec2 (-width/2,height/2),
               new Vec2 (-width/2,-height/2)
              ])

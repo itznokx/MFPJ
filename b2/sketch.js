@@ -63,12 +63,140 @@ class Vec2{
     return new Vec2 (this.y,(-1)*this.x);
   }
 }
+function linePlaneIntersection(p1,p2,q,n){
+  let num = q.dif(p1).dot(n)
+  let div = p2.dif(p1).dot(n)
+  let final = num/div
+  return final
+}
+function intersect(A,B,C,D){
+  let AB = B.dif(A);
+  let AC = C.dif(A);
+  let AD = D.dif(A);
+  let ABxAC = AB.cross(AC)
+  let ABxAD = AB.cross(AD)
+  let cond1 = ABxAC*ABxAD;
+  let CA = A.dif(C);
+  let CB = B.dif(C);
+  let CD = D.dif(C);
+  let CDxCA = CD.cross(CA)
+  let CDxCB = CD.cross(CB)
+  let cond2 = CDxCA*CDxCB;
+  if (cond1 <= 0 && cond2 <=0){
+    return true
+  }
+  return false
+ 
+}
+function pointOfIntersection(A,B,C,D){
+  let dr = D.dif(C);
+  let nm = (B.dif(A)).rot90()
+  let q = B
+  let t = linePlaneIntersection(C,D,q,nm)
+  if (t>1 || t<0){
+    return null
+  }
+  let pF = C.add(dr.mult(t))
+  return pF;
+}
+function arrayLenght(array) {
+  let size = 0;
+  while (array[size]!=null){
+    size++
+  }
+  return size;
+}
+function renderLines(array){
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i++){
+    colore(0,0,0)
+    line(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
+  }pointOfIntersection
+}
+function renderPoints(array){
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i++){
+    colore(255,0,0)
+    circle(array[i].x,array[i].y,5)
+  }
+}
+function calculateIntersections(array){
+  let finalInter = []
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i--){
+    let A = array[i][0]
+    let B = array[i][1]
+    for (let j=0;j<array_size;j++){
+      if(j!=i){
+        let C = array[j][0]
+        let D = array[j][1]
+        if (intersect(A,B,C,D)){
+          let li = array[i]
+          let n = (B.dif(A)).rot90()
+          let t = linePlaneIntersection(C,D,A,n)
+          let dr = D.dif(C)
+          let pt = C.add(dr.mult(t))
+          finalInter.push(new Vec2(pt.x,pt.y))
+        }
+      }
+    }
+  }
+  return finalInter
+}
+function calculateIntersections2(array1,arary2){
+  let finalInter = []
+  let array1_size = arrayLenght(array1)
+  let array2_size = arrayLenght(arary2)
+  for (let i=0;i<array1_size;i--){
+    let A = array1[i][0]
+    let B = array1[i][1]
+    for (let j=0;j<array2_size;j++){
+      if(j!=i){
+        let C = array2[j][0]
+        let D = array2[j][1]
+        if (intersect(A,B,C,D)){
+          let li = array[i]
+          let n = (B.dif(A)).rot90()
+          let t = linePlaneIntersection(C,D,A,n)
+          let dr = D.dif(C)
+          let pt = C.add(dr.mult(t))
+          finalInter.push(new Vec2(pt.x,pt.y))
+        }
+      }
+    }
+  }
+  return finalInter
+}
+var lines = []
+var boxLines = []
+var intersections = []
 function setup(){
+  boxLines.push([new Vec2(-width/1,height/1),new Vec2(width/1,height/1)])
+  boxLines.push([new Vec2(width/1,height/1),new Vec2(width/1,-height/1)])
+  boxLines.push([new Vec2(-width/1,-height/1),new Vec2(width/1,-height/1)])
+  boxLines.push([new Vec2(-width/1,height/1),new Vec2(-width/1,-height/1)])
   createCanvas(400,400)
 }
 function draw(){
   goCartesian()
-  goPseudo()
+  renderLines(boxLines)
+  texto("(-1,+1)",(-width/4)-45,(height/4))
+  texto("(+1,+1)",(width/4)+10,(height/4))
+  texto("(-1,-1)",(-width/4)-45,(-height/4))
+  texto("(+1,-1)",(width/4)+10,(-height/4))
+}
+function mouseClicked(){
+  if (arrayLenght(lines)<2){
+    lines.push([new Vec2(0,0),new Vec2(mouseXC,mouseYC)])
+  }
+  
+}
+function keyPressed(){
+  if (key=='d'){
+    if (arrayLenght(lines)>0){
+      lines.pop()
+    }
+  }
 }
 function goCartesian()
 {
@@ -84,22 +212,6 @@ function goCartesian()
   
   translate(width/2,height/2)
   scale(1,-1,1)  
-}
-function goPseudo(){
-  //upper line
-  colore (64)
-  line(-width/4,height/4,width/4,height/4)
-  //r-sided line
-  line(width/4,height/4,width/4,-height/4)
-  //down line
-  line(-width/4,-height/4,width/4,-height/4)
-  //l-sided line
-  line(-width/4,height/4,-width/4,-height/4)
-  colore(32)
-  texto("(-1,+1)",(-width/4)-45,(height/4))
-  texto("(+1,+1)",(width/4)+10,(height/4))
-  texto("(-1,-1)",(-width/4)-45,(-height/4))
-  texto("(+1,-1)",(width/4)+10,(-height/4))
 }
 function grabMouse()
 {
