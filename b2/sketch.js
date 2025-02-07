@@ -192,6 +192,12 @@ function draw(){
   if (arrayLenght(lines)<2){
     seta(0,0,mouseXC,mouseYC)
   }
+  if (arrayLenght(lines)==2){
+    let AB = lines[0][1].dif(lines[0][0]).normalize()
+    let CD = lines[1][1].dif(lines[1][0]).normalize()
+    print("["+AB.x+","+AB.y+"]")
+    print("["+CD.x+","+CD.y+"]")
+  }
   texto("(-1,+1)",(-width/4)-45,(height/4))
   texto("(+1,+1)",(width/4)+10,(height/4))
   texto("(-1,-1)",(-width/4)-45,(-height/4))
