@@ -111,10 +111,10 @@ function projectAndDraw(pts,axis){
     let vpi = axis.mult(s)
     minS = min(minS,s)
     maxS = max(maxS,s)
-    colore(0,64,0,64)
-    circle(vpi.x,vpi.y,5)
-    colore(128,64)
-    line(pi.x,pi.y,vpi.x,vpi.y)
+    //colore(0,64,0,64)
+    //circle(vpi.x,vpi.y,5)
+    //colore(128,64)
+    //line(pi.x,pi.y,vpi.x,vpi.y)
   }
   return [minS,maxS]
 }
@@ -125,6 +125,7 @@ function drawOBB (u,v,center,largura,altura){
   let p2 = center.add(uAux.dif(vAux))
   let p3 = center.dif(uAux.add(vAux))
   let p4 = center.dif(uAux.dif(vAux))
+  colore(64,64)
   quad(p1.x,p1.y,
        p2.x,p2.y,
        p3.x,p3.y,
