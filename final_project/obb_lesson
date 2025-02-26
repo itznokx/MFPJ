@@ -85,8 +85,10 @@ function renderPoints(array){
   }
 }
 function randomPoint(){
-  let x1 = random(-width/2,width/2)
-  let y1 = random(-height/2,height/2)
+  let w = width/3
+  let h = height/3
+  let x1 = random(-w,w)
+  let y1 = random(-h,h)
   return (new Vec2(x1,y1))
 }
 function renderSeta(array){
@@ -102,14 +104,19 @@ function drawAxis(axis){
 function projectAndDraw(pts,axis){
   let dotUU = 1/(axis.dot(axis))
   let preCalc = axis.mult(dotUU)
+  let minS = Infinity;
+  let maxS = -Infinity;
   for (let pi of pts ){
     let s = pi.dot(axis) * dotUU
     let vpi = axis.mult(s)
+    minS = min(minS,s)
+    maxS = max(maxS,s)
     colore(0,64,0,64)
     circle(vpi.x,vpi.y,5)
     colore(128,64)
     line(pi.x,pi.y,vpi.x,vpi.y)
   }
+  return [minS,maxS]
 }
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0;
@@ -141,7 +148,10 @@ function draw(){
   drawAxis(u.mult(lowPonder))
   colore(128,0,128)
   drawAxis(v.mult(lowPonder))
-  projectAndDraw(points,u)
+  let minU, maxU = projectAndDraw(points,u)
+  let minV, maxV = projectAndDraw(points,v)
+  let larguraOBB = maxU-minU
+  let alturaOBB = maxV-minV
 }
 function goCartesian()
 {
