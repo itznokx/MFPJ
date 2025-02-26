@@ -85,8 +85,8 @@ function renderPoints(array){
   }
 }
 function randomPoint(){
-  let w = width/3
-  let h = height/3
+  let w = width/4
+  let h = height/4
   let x1 = random(-w,w)
   let y1 = random(-h,h)
   return (new Vec2(x1,y1))
@@ -118,8 +118,17 @@ function projectAndDraw(pts,axis){
   }
   return [minS,maxS]
 }
-function drawOBB (largura,altura,center){
-  
+function drawOBB (u,v,center,largura,altura){
+  let uAux = u.mult(largura/2)
+  let vAux = v.mult(altura/2)
+  let p1 = center.add(uAux.add(vAux))
+  let p2 = center.add(uAux.dif(vAux))
+  let p3 = center.dif(uAux.add(vAux))
+  let p4 = center.dif(uAux.dif(vAux))
+  quad(p1.x,p1.y,
+       p2.x,p2.y,
+       p3.x,p3.y,
+       p4.x,p4.y)
 }
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0;
@@ -162,6 +171,7 @@ function draw(){
   let pu = u.mult(uc)
   let pv = v.mult(vc)
   let center = pu.add(pv)
+  drawOBB(u,v,center,larguraOBB,alturaOBB)
 }
 function goCartesian()
 {
