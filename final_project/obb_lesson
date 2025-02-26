@@ -148,10 +148,12 @@ function draw(){
   drawAxis(u.mult(lowPonder))
   colore(128,0,128)
   drawAxis(v.mult(lowPonder))
-  let minU, maxU = projectAndDraw(points,u)
-  let minV, maxV = projectAndDraw(points,v)
+  let [minU, maxU] = projectAndDraw(points,u)
+  let [minV, maxV] = projectAndDraw(points,v)
   let larguraOBB = maxU-minU
   let alturaOBB = maxV-minV
+  print ("largura obb: "+larguraOBB)
+  print ("altura obb: "+alturaOBB)
 }
 function goCartesian()
 {
