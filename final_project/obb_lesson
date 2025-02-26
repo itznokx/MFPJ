@@ -118,6 +118,9 @@ function projectAndDraw(pts,axis){
   }
   return [minS,maxS]
 }
+function drawOBB (largura,altura,center){
+  
+}
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0;
 var points = [];
@@ -154,6 +157,11 @@ function draw(){
   let alturaOBB = maxV-minV
   print ("largura obb: "+larguraOBB)
   print ("altura obb: "+alturaOBB)
+  let uc = (maxU+minU)/2
+  let vc = (maxV+minV)/2
+  let pu = u.mult(uc)
+  let pv = v.mult(vc)
+  let center = pu.add(pv)
 }
 function goCartesian()
 {
