@@ -99,6 +99,18 @@ function renderSeta(array){
 function drawAxis(axis){
   seta(0,0,axis.x,axis.y)
 }
+function projectAndDraw(pts,axis){
+  let dotUU = 1/(axis.dot(axis))
+  let preCalc = axis.mult(dotUU)
+  for (let pi of pts ){
+    let s = pi.dot(axis) * dotUU
+    let vpi = axis.mult(s)
+    colore(0,64,0,64)
+    circle(vpi.x,vpi.y,5)
+    colore(128,64)
+    line(pi.x,pi.y,vpi.x,vpi.y)
+  }
+}
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0;
 var points = [];
@@ -119,12 +131,17 @@ function setup(){
 
 function draw(){
   let ponder = 1000
+  let lowPonder = 50
   goCartesian()
   renderPoints(points)
-  colore(0,0,255)
+  colore(128,128)
   drawAxis(u.mult(ponder))
-  
   drawAxis(uMinus.mult(ponder))
+  colore(0,0,255)
+  drawAxis(u.mult(lowPonder))
+  colore(128,0,128)
+  drawAxis(v.mult(lowPonder))
+  projectAndDraw(points,u)
 }
 function goCartesian()
 {
