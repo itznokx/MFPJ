@@ -80,7 +80,6 @@ function renderLines(array){
 function renderPoints(array){
   let array_size = arrayLenght(array)
   for (let i=0;i<array_size;i++){
-    colore(255,0,0)
     circle(array[i].x,array[i].y,5)
   }
 }
@@ -230,7 +229,7 @@ class BC {
     strokeWeight(1)
   }
   drawSelfPoints(cor){
-    colore(cor[0],cor[1],cor[2],cor[3])
+    colore(cor[0],cor[1],cor[2],128)
     renderPoints(this.pts)
   }
 }

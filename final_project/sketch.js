@@ -25,8 +25,8 @@ var bound2 = null;
 var actual = 1;
 var colorB1 = [64,64,255]
 var colorB2 = [255,64,64]
-var pointsB1 = [0,0,0]
-var pointsB2 = [0,0,0]
+var pointsB1 = [0,0,255]
+var pointsB2 = [255,0,0]
 function draw(){
   let ponder = 1000
   let lowPonder = 50
