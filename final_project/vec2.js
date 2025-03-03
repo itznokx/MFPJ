@@ -223,9 +223,11 @@ class BC {
     this.r = this.r*2
   }
   draw(){
-    colore(this.cor[0],this.cor[1],this.cor[2],32)
+    strokeWeight(2)
+    colore(this.cor[0],this.cor[1],this.cor[2],128)
     noFill()
     circle(this.center.x,this.center.y,this.r)
+    strokeWeight(1)
   }
   drawSelfPoints(cor){
     colore(cor[0],cor[1],cor[2],cor[3])
