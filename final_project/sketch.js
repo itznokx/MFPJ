@@ -1,41 +1,115 @@
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0;
 var points = [];
-var rP = 20;
+var rP = 5;
 var o;
 var u;
 var v;
-function setup(){
-  createCanvas(400,400)
-  for (let i = 0;i<rP;i++){
-    points.push(randomPoint())
+function randomPoints(maxP){
+  let pts = []
+  for (let i = 0;i<maxP;i++){
+    pts.push(randomPoint())
   }
+  
+  return pts
+}
+function setup(){
+  createCanvas(800,800)
   o = random(PI)
+  points1 = randomPoints(rP)
+  points2 = randomPoints(rP)
   u = new Vec2 (cos(o),sin(o))
 }
-
+var bound1 = null;
+var bound2 = null;
+var actual = 1;
+var colorB1 = [64,64,255]
+var colorB2 = [255,64,64]
+var pointsB1 = [0,0,0]
+var pointsB2 = [0,0,0]
 function draw(){
   let ponder = 1000
   let lowPonder = 50
-  let colorOBB = [64,64,255]
-  let colorBC =  [64,255,64]
-  let colorABB = [255,64,64]
+
   goCartesian()
-  /*
-  let bound1 = new OBB (points,u,colorOBB)
-  bound1.draw()
-  bound1.drawSelfPoints([0,0,255,0])
-  */
-  /*
-  let bound2 = new AABB (points,colorABB)
-  bound2.draw()
-  bound2.drawSelfPoints([0,0,255,0])
-  */
-  
-  let bound3 = new BC (points,colorBC);
-  bound3.drawSelfPoints([0,0,255,0])
-  bound3.draw()
-  
+  if (bound1!=null){
+    bound1.draw()
+    bound1.drawSelfPoints(pointsB1)
+  }
+  if (bound2!=null){
+    bound2.draw()
+    bound2.drawSelfPoints(pointsB2)
+  }
+}
+function keyPressed(){
+  if (key=='c'){
+    if (actual==1){
+      bound1 = null;
+      bound1 = new BC(points1,colorB1)
+    }
+    if (actual==2){
+      bound2 = null;
+      bound2 = new BC(points2,colorB2)
+    }
+  }
+  if (key=='o'){
+    if (actual==1){
+      bound1 = null;
+      bound1 = new OBB(points1,u,colorB1)
+    }
+    if (actual==2){
+      bound2 = null;
+      bound2 = new OBB(points2,u,colorB2)
+    }
+  }
+  if (key=='a'){
+    if (actual==1){
+      bound1 = null;
+      bound1 = new AABB(points1,colorB1)
+    }
+    if (actual==2){
+      bound2 = null;
+      bound2 = new AABB(points2,colorB2)
+    }
+  }
+  if (key=='r'){
+    if (actual==1){
+      points1 = randomPoints(rP)
+      if (bound1.type=="AABB"){
+        bound1 = null;
+        bound1 = new AABB(points1,colorB1)
+      }
+      if (bound1.type=="OBB"){
+        bound1 = null;
+        bound1 = new OBB(points1,u,colorB1)
+      }
+      if (bound1.type=="BC"){
+        bound1 = null;
+        bound1 = new BC(points1,colorB1)
+      }
+    }
+    if (actual==2){
+      points2 = randomPoints(rP)
+      if (bound2.type=="AABB"){
+        bound2 = null;
+        bound2 = new AABB(points2,colorB2)
+      }
+      if (bound2.type=="OBB"){
+        bound2 = null;
+        bound2 = new OBB(points2,u,colorB2)
+      }
+      if (bound2.type=="BC"){
+        bound2 = null;
+        bound2 = new BC(points2,colorB2)
+      }
+    }
+  }
+  if (key=='1'){
+    actual = 1
+  }
+  if (key=='2'){
+    actual= 2
+  }
 }
 function goCartesian()
 {
