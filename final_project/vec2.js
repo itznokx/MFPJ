@@ -158,8 +158,12 @@ class OBB {
     this.pts = points;
     this.u = iU;
     this.v = u.rot90();
-    [this.minU, this.maxU] = minAxis(points,this.u)
-    [this.minV, this.maxV] = minAxis(points,this.v)
+    let [miU, maU] = minAxis(points,this.u)
+    let [miV, maV] = minAxis(points,this.v)
+    this.minU = miU;
+    this.minV = miV;
+    this.maxU = maU;
+    this.maxV = maV;
     this.largura = this.maxU - this.minU;
     this.altura = this.maxV - this.minV;
     let uc = (this.maxU+this.minU)/2
