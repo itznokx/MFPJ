@@ -34,7 +34,7 @@ class Vec2{
     return scalar
   }
   size(){
-    return sqrt(this.dot(this))
+    return sqrt(this.x*this.x+this.y*this.y)
   }
   normalize(){
     let invLenght = 1.0 / this.size()
@@ -118,6 +118,7 @@ function minAxis(pts,axis){
 // AABB
 class AABB{
   constructor(points,uColor){
+    this.type = "AABB"
     this.cor = uColor;
     this.pts = points;
     let aMaxX = -Infinity;
@@ -159,6 +160,7 @@ class AABB{
 // OBB
 class OBB {
   constructor(points,iU,uColor){
+    this.type = "OOBB"
     this.pts = points;
     this.cor = uColor;
     this.pts = points;
@@ -191,6 +193,45 @@ class OBB {
         this.p2.x,this.p2.y,
         this.p3.x,this.p3.y,
         this.p4.x,this.p4.y)
+  }
+  drawSelfPoints(cor){
+    colore(cor[0],cor[1],cor[2],cor[3])
+    renderPoints(this.pts)
+  }
+}
+// BC (BOUND CIRCLE)
+function fartestPoint(pi,points){
+  let farPi = pi;
+  let maxDist = 0;
+  for (let p of points){
+    let aux = p.dif(pi);
+    if (aux.size()>=maxDist){
+      farPi = p;
+      maxDist = aux.size()
+    }
+  }
+  return [farPi,maxDist];
+}
+class BC {
+  constructor(points,uColor){
+    this.cor = uColor;
+    this.pts = points;
+    let auxX = 0;
+    let auxY = 0;
+    for( let p of points){
+      auxX += p.x;
+      auxY += p.y;
+    }
+    let cx = auxX/arrayLenght(points)
+    let cy = auxY/arrayLenght(points)
+    this.center = new Vec2 (cx,cy);
+    let farPoint;
+    [farPoint,this.r] = fartestPoint(this.center,points);
+    this.r = this.r*2
+  }
+  draw(){
+    noFill()
+    circle(this.center.x,this.center.y,this.r)
   }
   drawSelfPoints(cor){
     colore(cor[0],cor[1],cor[2],cor[3])

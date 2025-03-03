@@ -1,7 +1,7 @@
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0;
 var points = [];
-var rP = 2;
+var rP = 20;
 var o;
 var u;
 var v;
@@ -17,17 +17,23 @@ function setup(){
 function draw(){
   let ponder = 1000
   let lowPonder = 50
-  let colorOBB = [64,64,64]
-  let colorABB = [128,64,32]
+  let colorOBB = [64,64,128]
+  let colorBC =  [64,128,64]
+  let colorABB = [128,64,64]
   goCartesian()
   /*
   let bound1 = new OBB (points,u,colorOBB)
   bound1.draw()
   bound1.drawSelfPoints([0,0,255,0])
   */
+  /*
   let bound2 = new AABB (points,colorABB)
   bound2.draw()
   bound2.drawSelfPoints([0,0,255,0])
+  */
+  let bound3 = new BC (points,colorBC);
+  bound3.drawSelfPoints([0,0,255,0])
+  bound3.draw()
 }
 function goCartesian()
 {
