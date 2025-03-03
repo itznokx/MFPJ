@@ -1,0 +1,158 @@
+class Vec2{
+  constructor(x,y){
+    this.x = x;
+    this.y = y;
+    this.pos = null;
+    this.cor = null;
+  }
+  render (){
+    if (this.cor != null)
+      colore(this.cor[0],this.cor[1],this.cor[2])
+    if (this.pos == null)
+      seta(0,0,this.x,this.y)
+    else
+      seta(this.pos.x,
+           this.pos.y,
+           this.pos.x+this.x,
+           this.pos.y+this.y);
+  }
+  add (v2){
+    return new Vec2(this.x+v2.x,this.y+v2.y)
+  }
+  sum (v2){
+    return new Vec2(this.x+v2.x,this.y+v2.y)
+  }
+  dif (v2){
+    return new Vec2(this.x - v2.x,this.y - v2.y);
+  }
+  mult (k){
+    return new Vec2(this.x*k,this.y*k);
+  }
+  // Produto Escalar (dot product)
+  dot (v2){
+    let scalar = this.x*v2.x+this.y*v2.y
+    return scalar
+  }
+  size(){
+    return sqrt(this.dot(this))
+  }
+  normalize(){
+    let invLenght = 1.0 / this.size()
+    return this.mult(invLenght);
+  }
+  cross (v2){
+    let prod = this.x*v2.y - this.y*v2.x
+    return prod;
+  }
+  projection(n){
+    let v = new Vec2(this.x,this.y)
+    let num = v.dot(n);
+    let den = n.dot(n);
+    let div = num/den
+    let vn = n.mult(div)
+    let vp = v.dif(vn)
+    return [vn, vp]
+  }
+  reflection(n,alfa,beta){
+    let [vn,vp] = this.projection(n)
+    let rx = alfa*vp.x - beta*vn.x
+    let ry = alfa*vp.y - beta*vn.y
+    return new Vec2(rx,ry)
+  }
+  rot90(){
+    return new Vec2 (this.y,(-1)*this.x);
+  }
+}
+function arrayLenght(array) {
+  let size = 0;
+  while (array[size]!=null){
+    size++
+  }
+  return size;
+}
+function renderLines(array){
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i++){
+    colore(0,0,0)
+    line(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
+  }
+}
+function renderPoints(array){
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i++){
+    colore(255,0,0)
+    circle(array[i].x,array[i].y,5)
+  }
+}
+function randomPoint(){
+  let w = width/4
+  let h = height/4
+  let x1 = random(-w,w)
+  let y1 = random(-h,h)
+  return (new Vec2(x1,y1))
+}
+function renderSeta(array){
+  let array_size = arrayLenght(array)
+  for (let i=0;i<array_size;i++){
+    colore(0,0,0)
+    seta(array[i][0].x,array[i][0].y,array[i][1].x,array[i][1].y)
+  }
+}
+function drawAxis(axis){
+  seta(0,0,axis.x,axis.y)
+}
+function minAxis(pts,axis){
+  let dotUU = 1/(axis.dot(axis))
+  let preCalc = axis.mult(dotUU)
+  let minS = Infinity;
+  let maxS = -Infinity;
+  for (let pi of pts){
+    let s = pi.dot(axis) * dotUU
+    let vpi = axis.mult(s)
+    minS = min(minS,s)
+    maxS = max(maxS,s)
+    //colore(0,64,0,64)
+  }
+  return [minS,maxS]
+}
+// OBB
+class Obb {
+  constructor(points,iU,uColor){
+    this.pts = points;
+    this.cor = uColor;
+    this.pts = points;
+    this.u = iU;
+    this.v = u.rot90();
+    let [miU, maU] = minAxis(points,this.u)
+    let [miV, maV] = minAxis(points,this.v)
+    this.minU = miU;
+    this.maxU = maU;
+    this.minV = miV;
+    this.maxV = maV;
+    this.width = this.maxU - this.minU;
+    this.height = this.maxV - this.minV;
+    let uc = (this.maxU+this.minU)/2
+    let vc = (this.maxV+this.minV)/2
+    let pu = this.u.mult(uc)
+    let pv = this.v.mult(vc)
+    this.center = pu.add(pv)
+    let uAux = this.u.mult(this.width/2)
+    let vAux = this.v.mult(this.height/2)
+    this.p1 = this.center.add(uAux.add(vAux))
+    this.p2 = this.center.add(uAux.dif(vAux))
+    this.p3 = this.center.dif(uAux.add(vAux))
+    this.p4 = this.center.dif(uAux.dif(vAux))
+  }
+
+  draw(){
+    colore(this.cor[0],this.cor[1],this.cor[2],32)
+    quad(this.p1.x,this.p1.y,
+        this.p2.x,this.p2.y,
+        this.p3.x,this.p3.y,
+        this.p4.x,this.p4.y)
+  }
+  drawSelfPoints(cor){
+    colore(cor[0],cor[1],cor[2],cor[3])
+    renderPoints(this.pts)
+  }
+}
