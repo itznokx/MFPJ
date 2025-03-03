@@ -152,7 +152,7 @@ class AABB{
 // OBB
 class OBB {
   constructor(points,iU,uColor){
-    this.type = "OOBB"
+    this.type = "OBB"
     this.pts = points;
     this.cor = uColor;
     this.pts = points;
@@ -202,6 +202,7 @@ function fartestPoint(pi,points){
 }
 class BC {
   constructor(points,uColor){
+    this.type = "BC"
     this.cor = uColor;
     this.pts = points;
     let auxX = 0;
@@ -218,8 +219,8 @@ class BC {
     this.r = this.r*2
   }
   draw(){
-    noFill()
     colore(this.cor[0],this.cor[1],this.cor[2],32)
+    noFill()
     circle(this.center.x,this.center.y,this.r)
   }
   drawSelfPoints(cor){
