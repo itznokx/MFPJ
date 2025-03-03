@@ -115,8 +115,49 @@ function minAxis(pts,axis){
   }
   return [minS,maxS]
 }
+// AABB
+class AABB{
+  constructor(points,uColor){
+    this.cor = uColor;
+    this.pts = points;
+    let aMaxX = -Infinity;
+    let aMaxY = -Infinity;
+    let aMinX = Infinity;
+    let aMinY = Infinity;
+    for (let p of points){
+      let auxX = p.x;
+      let auxY = p.y;
+      if (auxX > aMaxX){
+        aMaxX = auxX;
+      }
+      if (auxY > aMaxY){
+        aMaxY = auxY;
+      }
+      if (auxX < aMinX){
+        aMinX = auxX;
+      }
+      if (auxY < aMinY){
+        aMinY = auxY;
+      }
+    }
+    this.minP = new Vec2 (aMinX,aMinY);
+    this.maxP = new Vec2 (aMaxX,aMaxY);
+  }
+  draw(){
+    colore(this.cor[0],this.cor[1],this.cor[2],32)
+    quad( this.minP.x,this.minP.y,
+          this.minP.x,this.maxP.y,
+          this.maxP.x,this.maxP.y,
+          this.maxP.x,this.minP.y
+      )
+  }
+  drawSelfPoints(cor){
+    colore(cor[0],cor[1],cor[2],cor[3])
+    renderPoints(this.pts)
+  }
+}
 // OBB
-class Obb {
+class OBB {
   constructor(points,iU,uColor){
     this.pts = points;
     this.cor = uColor;
@@ -129,15 +170,15 @@ class Obb {
     this.maxU = maU;
     this.minV = miV;
     this.maxV = maV;
-    this.width = this.maxU - this.minU;
-    this.height = this.maxV - this.minV;
+    this.largura = this.maxU - this.minU;
+    this.altura = this.maxV - this.minV;
     let uc = (this.maxU+this.minU)/2
     let vc = (this.maxV+this.minV)/2
     let pu = this.u.mult(uc)
     let pv = this.v.mult(vc)
     this.center = pu.add(pv)
-    let uAux = this.u.mult(this.width/2)
-    let vAux = this.v.mult(this.height/2)
+    let uAux = this.u.mult(this.largura/2)
+    let vAux = this.v.mult(this.altura/2)
     this.p1 = this.center.add(uAux.add(vAux))
     this.p2 = this.center.add(uAux.dif(vAux))
     this.p3 = this.center.dif(uAux.add(vAux))
