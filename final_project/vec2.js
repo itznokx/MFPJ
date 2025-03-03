@@ -128,18 +128,10 @@ class AABB{
     for (let p of points){
       let auxX = p.x;
       let auxY = p.y;
-      if (auxX > aMaxX){
-        aMaxX = auxX;
-      }
-      if (auxY > aMaxY){
-        aMaxY = auxY;
-      }
-      if (auxX < aMinX){
-        aMinX = auxX;
-      }
-      if (auxY < aMinY){
-        aMinY = auxY;
-      }
+      aMaxX = max(auxX,aMaxX)
+      aMaxY = max(auxY,aMaxY)
+      aMinX = min(auxX,aMinX)
+      aMinY = min(auxY,aMinY)
     }
     this.minP = new Vec2 (aMinX,aMinY);
     this.maxP = new Vec2 (aMaxX,aMaxY);
@@ -166,12 +158,8 @@ class OBB {
     this.pts = points;
     this.u = iU;
     this.v = u.rot90();
-    let [miU, maU] = minAxis(points,this.u)
-    let [miV, maV] = minAxis(points,this.v)
-    this.minU = miU;
-    this.maxU = maU;
-    this.minV = miV;
-    this.maxV = maV;
+    [this.minU, this.maxU] = minAxis(points,this.u)
+    [this.minV, this.maxV] = minAxis(points,this.v)
     this.largura = this.maxU - this.minU;
     this.altura = this.maxV - this.minV;
     let uc = (this.maxU+this.minU)/2
