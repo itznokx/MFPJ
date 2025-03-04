@@ -114,6 +114,65 @@ function minAxis(pts,axis){
   }
   return [minS,maxS]
 }
+function fartestPoint(pi,points){
+  let farPi = pi;
+  let maxDist = 0;
+  for (let p of points){
+    let aux = p.dif(pi);
+    if (aux.size()>=maxDist){
+      farPi = p;
+      maxDist = aux.size()
+    }
+  }
+  return [farPi,maxDist];
+}
+function closestPoint(pi,points){
+  let farPi = pi;
+  let minDist = Infinity;
+  for (let p of points){
+    let aux = p.dif(pi);
+    if (aux.size()<minDist){
+      farPi = p;
+      minDist = aux.size()
+    }
+  }
+  return [farPi,minDist];
+}
+function colide_BC_BC (bc1,bc2){
+  let distance_center = (bc2.center.dif(bc1.center)).size();
+  if (abs(distance_center)<=(bc1.r+bc2.r)){
+    return true
+  }
+  return false
+}
+function colide_BC_AABB (bc1,aabb1){
+  let closest_point = closestPoint(bc1.center,[aabb1.maxP,aabb1.minP]);
+  let dist = bc1.center.dif(closestPoint);
+  if (dist.dot(dist)<=bc1.r*bc1.r){
+    return true
+  }
+  else{
+    return false
+  }
+}
+function colide_BC_OBB (bc1,obb1){
+
+}
+function collide_AABB_AABB (aabb1,aabb2){
+  if (aabb1.maxP.x < aabb2.minP.x||
+      aabb1.maxP.y < aabb2.minP.y||
+      aabb1.minP.x > aabb2.maxP.x||
+      aabb1.minP.y > aabb2.maxP.y){
+    return false
+  }
+  return true
+}
+function collide_AABB_OBB (aabb1,obb1){
+
+}
+function collide_OBB_OBB (obb1,obb2){
+
+}
 // AABB
 class AABB{
   constructor(points,uColor){
@@ -146,6 +205,15 @@ class AABB{
   drawSelfPoints(cor){
     colore(cor[0],cor[1],cor[2],cor[3])
     renderPoints(this.pts)
+  }
+  checkPoint(point){
+    if (point.x > this.maxP.x||
+        point.y > this.maxP.y||
+        point.x < this.minP.x||
+        point.y < this.minP.y){
+      return false
+    }
+    return true
   }
 }
 // OBB
@@ -189,20 +257,27 @@ class OBB {
     colore(cor[0],cor[1],cor[2],cor[3])
     renderPoints(this.pts)
   }
+  checkPoint(point){
+      let axis = this.p2.dif(this.p1)
+      let axis2 = axis.rot90()
+      let dotUU = 1/(axis.dot(axis))
+      let dotVV = 1/(axis2.dot(axis2))
+      let preCalcV = axis2.mult(dotVV)
+      let preCalc = axis.mult(dotUU)
+      let s = point.dot(axis) * dotUU
+      let sv = point.dot(axis2) * dotVV
+      let upi = axis.mult(s)
+      let vpi = axis2.mult(sv)
+      colore(0,64,0,64)
+      circle(upi.x,upi.y,5)
+      circle(vpi.x,vpi.y,5)
+      colore(128,64)
+      line(point.x,point.y,upi.x,upi.y)
+      line(point.x,point.y,vpi.x,vpi.y)
+      return false
+    }
 }
 // BC (BOUND CIRCLE)
-function fartestPoint(pi,points){
-  let farPi = pi;
-  let maxDist = 0;
-  for (let p of points){
-    let aux = p.dif(pi);
-    if (aux.size()>=maxDist){
-      farPi = p;
-      maxDist = aux.size()
-    }
-  }
-  return [farPi,maxDist];
-}
 class BC {
   constructor(points,uColor){
     this.type = "BC"
@@ -231,5 +306,12 @@ class BC {
   drawSelfPoints(cor){
     colore(cor[0],cor[1],cor[2],128)
     renderPoints(this.pts)
+  }
+  checkPoint(point){
+    let distance_center = (this.center.dif(point)).size()
+    if (distance_center<=this.r/2){
+      return true
+    }
+    return false
   }
 }

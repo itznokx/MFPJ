@@ -14,6 +14,7 @@ function randomPoints(maxP){
   return pts
 }
 function setup(){
+  frameRate(120)
   createCanvas(800,800)
   o = random(PI)
   points1 = randomPoints(rP)
@@ -30,16 +31,28 @@ var pointsB2 = [255,0,0]
 function draw(){
   let ponder = 1000
   let lowPonder = 50
-
   goCartesian()
+  let mouseInB1 = 0
+  let mouseInB2 = 0
+  let mousePoint = new Vec2 (mouseXC,mouseYC)
   if (bound1!=null){
     bound1.draw()
     bound1.drawSelfPoints(pointsB1)
+    if (bound1.checkPoint(mousePoint)==true){
+      print("Mouse in b1")
+      mouseInB1 = 1
+    }
   }
   if (bound2!=null){
     bound2.draw()
     bound2.drawSelfPoints(pointsB2)
+    if (bound2.checkPoint(mousePoint)==true){
+      print("Mouse in b2")
+      mouseInB2 = 1
+    }
   }
+  colore(255*mouseInB2,64,255*mouseInB1);
+  circle(mouseXC,mouseYC,4)
 }
 function keyPressed(){
   if (key=='c'){
@@ -109,6 +122,14 @@ function keyPressed(){
   }
   if (key=='2'){
     actual= 2
+  }
+  if (key=='k'){
+    if(actual==1){
+      bound1 == null
+    }
+    if(actual==2){
+      bound2 == null
+    }
   }
 }
 function goCartesian()
