@@ -81,7 +81,7 @@ function draw(){
   colore(0)
   colore(0,128*mouseInB2,0);
   texto((mouseInB2==true),-90,140)
-  colore(255*mouseInB2,0,255*mouseInB1)
+  colore(128*mouseInB2,0,128*mouseInB1)
   circle(mouseXC,mouseYC,4)
 }
 function keyPressed(){

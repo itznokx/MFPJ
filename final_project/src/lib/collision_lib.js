@@ -54,23 +54,46 @@ function collide_AABB_AABB (aabb1,aabb2){
   }
   return true
 }
+function getProjectionRange(vertices, axis) {
+    let min = vertices[0].dot(axis)
+    let max = min;
+    for (let i = 1; i < arrayLenght(vertices); i++) {
+        let projection = axis.dot(vertices[i]);
+        if (projection < min) 
+          min = projection;
+        if (projection > max) 
+          max = projection;
+    }
+    return { min, max };
+}
+function overlap (min1,max1,min2,max2){
+  return ((max1>=min2)&&(max2>=min1))
+}
 function collide_AABB_OBB (aabb1,obb1){
-  let pointsAABB = [aabb1.maxP,aabb1.minP,new Vec2(aabb1.maxP.x,aabb1.minP.y),new Vec2(aabb1.minP.x,aabb1.maxP.y)]
-  let pointsOBB = [obb1.p1,obb1.p2,obb1.p3,obb1.p4,obb1.center]
-  for (let p of pointsAABB){
-    if(obb1.checkPoint(p)){
-      return true
+  let pointsAABB = [aabb1.maxP,
+                    aabb1.minP,
+                    new Vec2(aabb1.maxP.x,aabb1.minP.y),
+                    new Vec2(aabb1.minP.x,aabb1.maxP.y)]
+  let pointsOBB = [ obb1.p1,
+                    obb1.p2,
+                    obb1.p3,
+                    obb1.p4,]
+  let allAxis = [ new Vec2(1,0),
+                  new Vec2(0,1),
+                  obb1.u,
+                  obb1.v]
+  for (let axis of allAxis){
+    let projAABB = getProjectionRange(pointsAABB, axis);
+    let projOBB = getProjectionRange(pointsOBB, axis);
+    if (!overlap(projAABB.min,projAABB.max,projOBB.min,projOBB.max)){
+      return false
     }
   }
-  for (let q of pointsOBB){
-    if (aabb1.checkPoint(q)){
-      return true
-    }
-  }
-  return false
+  return true
 }
 function collide_OBB_OBB (obb1,obb2){
-
+  let cosa = cos(-obb1.angle)
+  let sina = sin(-obb1.angle)
   let pointsOBB1 = [obb1.p1,obb1.p2,obb1.p3,obb1.p4]
   let pointsOBB2 = [obb2.p1,obb2.p2,obb2.p3,obb2.p4]
   for (let p of pointsOBB2){
