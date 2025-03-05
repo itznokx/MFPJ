@@ -108,6 +108,5 @@ function collide_OBB_OBB (obb1,obb2){
   // "transformando" a OBB para o sistema local de obb1
   let uAux = new Vec2 (cos(-obb1.angle+obb2.angle),sin(-obb1.angle+obb2.angle))
   let auxOBB = new OBB ([p1A,p2A,p3A,p4A],uAux,obb2.cor)
-  auxAABB.draw();auxOBB.draw()
   return collide_AABB_OBB(auxAABB,auxOBB);
 }
