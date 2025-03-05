@@ -83,6 +83,15 @@ function draw(){
   texto((mouseInB2==true),-90,140)
   colore(128*mouseInB2,0,128*mouseInB1)
   circle(mouseXC,mouseYC,4)
+  colore(0,0,0)
+  texto("Bounding Cursor: ",-180,-180)
+  if (actual==1){
+    colore(0,0,255)
+  }
+  if (actual==2){
+    colore(255,0,0)
+  }
+  texto(actual,-70,-180)
 }
 function keyPressed(){
   if (key=='c'){
