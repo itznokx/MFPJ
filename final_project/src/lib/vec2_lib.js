@@ -62,6 +62,8 @@ class Vec2{
   rot90(){
     return new Vec2 (-this.y,this.x);
   }
+  // função de rotação baseado num angl (radianos) theta
+  // CUIDADO ao usar (se precisar translade anteriormente para evitar error)
   rot(theta){
     let cosA = cos(theta)
     let sinA = sin(theta)

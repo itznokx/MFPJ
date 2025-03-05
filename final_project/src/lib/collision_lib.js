@@ -31,6 +31,7 @@ function collide_BC_OBB (bc1,obb1){
   // rotacionar obb para uma abb
   // essa func retorna também os pontos da AABB
   let auxPoints = obb1.turn_OBB_to_AABB()
+
   let auxAABB = new AABB(auxPoints,[32,32,32])
   let auxBC = new BC(bc1.pts,[32,32,32]);
   let cosa = cos(-obb1.angle)
@@ -39,6 +40,7 @@ function collide_BC_OBB (bc1,obb1){
   let dy = auxBC.center.y-obb1.center.y
   let newX = dx * cosa - dy * sina;
   let newY = dx * sina + dy * cosa;
+  // transforma o circulo para as coordenadas locais da OBB1
   let newPoint = new Vec2 (newX,newY)
   auxBC.center = newPoint
   // auxBC.draw()
@@ -82,6 +84,7 @@ function collide_AABB_OBB (aabb1,obb1){
                   new Vec2(0,1),
                   obb1.u,
                   obb1.v]
+  // fazendo projeções em todas as dimensões da AABB e OBB
   for (let axis of allAxis){
     let projAABB = getProjectionRange(pointsAABB, axis);
     let projOBB = getProjectionRange(pointsOBB, axis);
@@ -92,16 +95,17 @@ function collide_AABB_OBB (aabb1,obb1){
   return true
 }
 function collide_OBB_OBB (obb1,obb2){
-  let cosa = cos(-obb1.angle)
-  let sina = sin(-obb1.angle)
+  // pegar os pontos
   let pointsOBB1 = [obb1.p1,obb1.p2,obb1.p3,obb1.p4]
   let pointsOBB2 = [obb2.p1,obb2.p2,obb2.p3,obb2.p4]
   let p1A = obb2.p1.rot(-obb1.angle)
   let p2A = obb2.p2.rot(-obb1.angle)
   let p3A = obb2.p3.rot(-obb1.angle)
   let p4A = obb2.p4.rot(-obb1.angle)
+  // "criando" AABB em coordenadas locais (sistema local de OBB1)
   let auxAABB = new AABB(obb1.turn_OBB_to_AABB(),obb1.cor)
   colore(26)
+  // "transformando" a OBB para o sistema local de obb1
   let auxOBB = new OBB ([p1A,p2A,p3A,p4A],obb2.u.rot(-obb1.angle),obb2.cor)
   return collide_AABB_OBB(auxAABB,auxOBB);
 }
