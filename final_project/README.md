@@ -15,7 +15,7 @@ Simulador de colisões entre Bounding Volumes (AABB,OBB,Circle) desenvolvido em 
 - [x] Reformular "nuvem" de pontos do bounding-volume correspondendo ao cursor atual
 - [ ] Mudar iterativamente o numéro de pontos gerados aleatoriamente
 ## Como iniciar
-- Para iniciar o programa, basta abrir o arquivo `index.html` com qualquer navegador (`recomendado o uso do navedor firefox`)
+- Para iniciar o programa, basta abrir o arquivo `index.html` com qualquer navegador (`recomendado o uso do navegador firefox`)
 - Por padrão, as bounding boxes irão ser geradas a partir de 2 pontos aleatórios gerados automaticamente. Isso pode ser alterado no arquivo [sketch.js](https://github.com/itznokx/MFPJ/blob/master/final_project/sketch.js), na linha 4.
 - O arquivo [index.html](https://github.com/itznokx/MFPJ/blob/master/final_project/index.html) pode ser alterado para melhor dinâmica na visualização do programa.
 
