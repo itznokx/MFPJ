@@ -135,7 +135,7 @@ function fartestPoint(pi,points){
   return [farPi,maxDist];
 }
 function closestPoint(pi,points){
-  let closePi = pi;
+  let closePi = null;
   let minDist = Infinity;
   for (let p of points){
     let aux = p.dif(pi);

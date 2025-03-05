@@ -1,7 +1,7 @@
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0;
 var points = [];
-var rP = 5;
+var rP = 2;
 function randomPoints(maxP){
   let pts = []
   for (let i = 0;i<maxP;i++){
@@ -53,6 +53,11 @@ function draw(){
     }
     if (bound2.type=="OBB"){
       //bound2.draw_OBB_to_AABB();
+    }
+    if(bound1!=null){
+      if(bound2.checkCollide(bound1)){
+        texto("Eles colidem",-100,100)
+      }
     }
   }
   colore(255*mouseInB2,32,255*mouseInB1);

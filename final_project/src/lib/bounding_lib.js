@@ -1,13 +1,14 @@
-function colide_BC_BC (bc1,bc2){
+function collide_BC_BC (bc1,bc2){
   let distance_center = (bc2.center.dif(bc1.center)).size();
   if (abs(distance_center)<=(bc1.r+bc2.r)){
     return true
   }
   return false
 }
-function colide_BC_AABB (bc1,aabb1){
+function collide_BC_AABB (bc1,aabb1){
   let closest_point = closestPoint(bc1.center,[aabb1.maxP,aabb1.minP]);
-  let dist = bc1.center.dif(closestPoint);
+  circle (closest_point.x,closest_point.y,5)
+  let dist = bc1.center.dif(closest_point);
   if (dist.dot(dist)<=bc1.r*bc1.r){
     return true
   }
@@ -15,12 +16,12 @@ function colide_BC_AABB (bc1,aabb1){
     return false
   }
 }
-function colide_BC_OBB (bc1,obb1){
+function collide_BC_OBB (bc1,obb1){
   // rotacionar obb para uma abb
   // essa func retorna também os pontos da AABB
   let auxPoints = obb1.draw_OBB_to_AABB()
   let auxAABB = new AABB(auxPoints,[0,0,0])
-  let auxBC = bc1;
+  let auxBC = new BC(bc1.pts,[0,0,0]);
   let cosa = cos(-obb1.angle)
   let sina = sin(-obb1.angle)
   let dx = auxBC.center.x-obb1.center.x
@@ -29,7 +30,7 @@ function colide_BC_OBB (bc1,obb1){
   let newY = dx * sina + dy * cosa;
   let newPoint = new Vec2 (newX,newY)
   auxBC.center = newPoint
-  return colide_BC_AABB(auxBC,auxAABB);
+  return collide_BC_AABB(auxBC,auxAABB);
 }
 function collide_AABB_AABB (aabb1,aabb2){
   if (aabb1.maxP.x < aabb2.minP.x||
@@ -41,10 +42,38 @@ function collide_AABB_AABB (aabb1,aabb2){
   return true
 }
 function collide_AABB_OBB (aabb1,obb1){
-  
+  let pointsAABB = [aabb1.maxP,
+                    aabb1.minP,
+                    new Vec2(aabb1.maxP.x,aabb1.minP.y),
+                    new Vec2(aabb1.minP.x,aabb1.maxP.y)]
+  let pointsOBB = [obb1.p1,obb1.p2,obb1.p3,obb1.p4]
+  for (let p of pointsAABB){
+    if(obb1.checkPoint(p)){
+      return true
+    }
+  }
+  for (let q of pointsOBB){
+    if (aabb1.checkPoint(q)){
+      return true
+    }
+  }
+  return false
 }
 function collide_OBB_OBB (obb1,obb2){
 
+  let pointsOBB1 = [obb1.p1,obb1.p2,obb1.p3,obb1.p4]
+  let pointsOBB2 = [obb2.p1,obb2.p2,obb2.p3,obb2.p4]
+  for (let p of pointsOBB2){
+    if(obb1.checkPoint(p)){
+      return true
+    }
+  }
+  for (let q of pointsOBB1){
+    if (obb2.checkPoint(q)){
+      return true
+    }
+  }
+  return false
 }
 // AABB
 class AABB{
@@ -88,15 +117,15 @@ class AABB{
     }
     return true
   }
-  checkColide(bound2){
+  checkCollide(bound2){
     if (bound2.type=="AABB"){
-
+      return(collide_AABB_AABB(this,bound2))
     }
     if (bound2.type=="OBB"){
-
+      return(collide_AABB_OBB(this,bound2))
     }
     if (bound2.type=="BC"){
-
+      return(collide_BC_AABB(bound2,this))
     }
   }
 }
@@ -184,15 +213,15 @@ class OBB {
     //circle(newPoint.x,newPoint.y,5)
     return auxAABB.checkPoint(newPoint)
   }
-  checkColide(bound2){
+  checkCollide(bound2){
     if (bound2.type=="AABB"){
-
+      return(collide_AABB_OBB(bound2,this))
     }
     if (bound2.type=="OBB"){
-
+      return(collide_OBB_OBB(bound2,this))
     }
     if (bound2.type=="BC"){
-      
+      return(collide_BC_OBB(bound2,this))
     }
   }
 }
@@ -233,15 +262,15 @@ class BC {
     }
     return false
   }
-  checkColide(bound2){
+  checkCollide(bound2){
     if (bound2.type=="AABB"){
-
+      return(collide_BC_AABB(this,bound2))
     }
     if (bound2.type=="OBB"){
-
+      return(collide_BC_OBB(this,bound2))
     }
     if (bound2.type=="BC"){
-      
+      return(collide_BC_BC(this,bound2))
     }
   }
 }
