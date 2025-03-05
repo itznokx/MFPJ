@@ -25,5 +25,5 @@ Simulador de colisões entre Bounding Volumes (AABB,OBB,Circle) desenvolvido em 
 - Pressione `A` para gerar ou alterar o bounding-volume atual (citado no item anterior) para uma AABB.
 - Pressione `O` para gerar ou alterar o bounding-volume atual  para uma OBB.
 - Pressione `C` para gerar ou alterar o bounding-volume atual  para um Bounding Circle.
-- Pressione `R` para re-calcular os pontos (DEFINIDOS NO ARQUIVO [sketch.js](https://github.com/itznokx/MFPJ/blob/master/final_project/sketch.js), LINHA 4) do volume referente ao cursor atual.
+- Pressione `R` para re-calcular os pontos (DEFINIDOS NO ARQUIVO [sketch.js](https://github.com/itznokx/MFPJ/blob/master/final_project/sketch.js), LINHA 4) do volume referente ao cursor atual. Cuidado, essa função irá gerar novos pontos e, eventualmente, um novo bounding-volume referente irá ser calculado no lugar.
 
