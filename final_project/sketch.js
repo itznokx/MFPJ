@@ -11,7 +11,7 @@ function randomPoints(maxP){
   return pts
 }
 function setup(){
-  frameRate(120)
+  frameRate(10)
   createCanvas(400,400)
   points1 = randomPoints(rP)
   points2 = randomPoints(rP)
@@ -100,14 +100,14 @@ function keyPressed(){
       bound1 = null;
       let o = random(PI)
       let u = new Vec2 (cos(o),sin(o))
-      print(o)
+      //print(o)
       bound1 = new OBB(points1,u,colorB1)
     }
     if (actual==2){
       bound2 = null;
       let o = random(PI)
       let u = new Vec2 (cos(o),sin(o))
-      print(o)
+      //print(o)
       bound2 = new OBB(points2,u,colorB2)
     }
   }

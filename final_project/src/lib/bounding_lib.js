@@ -6,36 +6,33 @@ function collide_BC_BC (bc1,bc2){
   return false
 }
 function collide_BC_AABB (bc1,aabb1){
-  let closest_point = closestPoint(bc1.center,[aabb1.maxP,aabb1.minP,new Vec2(aabb1.maxP.x,aabb1.minP.y),new Vec2(aabb1.minP.x,aabb1.maxP.y)]);
-  circle(closest_point.x,closest_point.y,10)
-  let dist_to_closest_point = closest_point.dif(bc1.center).size()
-  print(dist_to_closest_point)
-  if (aabb1.checkPoint(bc1.center)||(dist_to_closest_point<=bc1.r/2)){
-    return true
-  }
-  let d2 = 0;
-  // calcular para dimensao x
-  if (bc1.center.x > aabb1.maxP.x){
-    d2+= (bc1.center.x - aabb1.maxP.x)**2
-  }
-  else{
-    d2+= (aabb1.minP.x - bc1.center.x)**2
-  }
-  // calcular para dimensão y
-  if (bc1.center.y > aabb1.maxP.y){
-    d2+= (bc1.center.y - aabb1.maxP.y)**2
-  }
-  else{
-    d2+= (aabb1.minP.y - bc1.center.y)**2
-  }
-  return (d2<=((bc1.r/2)**2))
+  // visual sat (linhas)
+  strokeWeight(3)
+  colore (aabb1.cor[0],aabb1.cor[1],aabb1.cor[1])
+  line(aabb1.minP.x,-180,aabb1.maxP.x,-180)
+  line(180,aabb1.minP.y,180,aabb1.maxP.y)
+  colore (bc1.cor[0],bc1.cor[1],bc1.cor[1])
+  line(bc1.center.x-bc1.r,-190,bc1.center.x+bc1.r,-190)
+  line(190,bc1.center.y-bc1.r,190,bc1.center.y+bc1.r)
+  strokeWeight(1)
+  // calcular usando sat
+  let close_x = max(aabb1.minP.x,min(bc1.center.x,aabb1.maxP.x))
+  let close_y = max(aabb1.minP.y,min(bc1.center.y,aabb1.maxP.y))
+  let dP = new Vec2(bc1.center.x-close_x,bc1.center.y-close_y)
+  let dist = dP.dot(dP);
+  return (dist<=(bc1.r)**2)
+  //print("Closest dist: "+dist_to_closest_point)
+  //print("Bound r: "+bc1.r)
+  
+  // x
+
 }
 function collide_BC_OBB (bc1,obb1){
   // rotacionar obb para uma abb
   // essa func retorna também os pontos da AABB
-  let auxPoints = obb1.draw_OBB_to_AABB()
-  let auxAABB = new AABB(auxPoints,[0,0,0])
-  let auxBC = new BC(bc1.pts,[0,0,0]);
+  let auxPoints = obb1.turn_OBB_to_AABB()
+  let auxAABB = new AABB(auxPoints,[32,32,32])
+  let auxBC = new BC(bc1.pts,[32,32,32]);
   let cosa = cos(-obb1.angle)
   let sina = sin(-obb1.angle)
   let dx = auxBC.center.x-obb1.center.x
@@ -44,7 +41,8 @@ function collide_BC_OBB (bc1,obb1){
   let newY = dx * sina + dy * cosa;
   let newPoint = new Vec2 (newX,newY)
   auxBC.center = newPoint
-  auxBC.draw()
+  // auxBC.draw()
+  //auxAABB.draw()
   return collide_BC_AABB(auxBC,auxAABB);
 }
 function collide_AABB_AABB (aabb1,aabb2){
@@ -109,7 +107,7 @@ class AABB{
     this.maxP = new Vec2 (aMaxX,aMaxY);
   }
   draw(){
-    colore(this.cor[0],this.cor[1],this.cor[2],128)
+    colore(this.cor[0],this.cor[1],this.cor[2],this.cor[4])
     quad( this.minP.x,this.minP.y,
           this.minP.x,this.maxP.y,
           this.maxP.x,this.maxP.y,
@@ -173,13 +171,26 @@ class OBB {
   }
 
   draw(){
-    colore(this.cor[0],this.cor[1],this.cor[2],128)
+    colore(this.cor[0],this.cor[1],this.cor[2],this.cor[4])
     //circle(this.p2.x,this.p2.y,10)
     //circle(this.p3.x,this.p3.y,10)
     quad(this.p1.x,this.p1.y,
         this.p2.x,this.p2.y,
         this.p3.x,this.p3.y,
         this.p4.x,this.p4.y)
+  }
+  turn_OBB_to_AABB(){
+    let cosa = cos(-this.angle)
+    let sina = sin(-this.angle)
+    let p1A = new Vec2( cosa*(this.p1.x-this.center.x)-sina*(this.p1.y-this.center.y),
+                        sina*(this.p1.x-this.center.x)+cosa*(this.p1.y-this.center.y))
+    let p2A = new Vec2( cosa*(this.p2.x-this.center.x)-sina*(this.p2.y-this.center.y),
+                        sina*(this.p2.x-this.center.x)+cosa*(this.p2.y-this.center.y))
+    let p3A = new Vec2( cosa*(this.p3.x-this.center.x)-sina*(this.p3.y-this.center.y),
+                        sina*(this.p3.x-this.center.x)+cosa*(this.p3.y-this.center.y))
+    let p4A = new Vec2( cosa*(this.p4.x-this.center.x)-sina*(this.p4.y-this.center.y),
+                        sina*(this.p4.x-this.center.x)+cosa*(this.p4.y-this.center.y))
+    return [p1A,p2A,p3A,p4A]
   }
   draw_OBB_to_AABB(){
     let cosa = cos(-this.angle)
@@ -200,7 +211,7 @@ class OBB {
     return [p1A,p2A,p3A,p4A]
   }
   drawSelfPoints(cor){
-    colore(cor[0],cor[1],cor[2],cor[3])
+    colore(this.cor[0],this.cor[1],this.cor[2],this.cor[3])
     renderPoints(this.pts)
   }
   checkPoint(point){
@@ -254,13 +265,12 @@ class BC {
     this.center = new Vec2 (cx,cy);
     let farPoint;
     [farPoint,this.r] = fartestPoint(this.center,points);
-    this.r = this.r*2
   }
   draw(){
     strokeWeight(2)
-    colore(this.cor[0],this.cor[1],this.cor[2],128)
+    colore(this.cor[0],this.cor[1],this.cor[2],this.cor[4])
     noFill()
-    circle(this.center.x,this.center.y,this.r)
+    circle(this.center.x,this.center.y,this.r*2)
     strokeWeight(1)
   }
   drawSelfPoints(cor){
@@ -269,7 +279,7 @@ class BC {
   }
   checkPoint(point){
     let distance_center = (this.center.dif(point)).size()
-    if (distance_center<=this.r/2){
+    if (distance_center<=this.r){
       return true
     }
     return false
