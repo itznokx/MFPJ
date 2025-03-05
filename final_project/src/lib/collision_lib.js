@@ -1,6 +1,6 @@
 function collide_BC_BC (bc1,bc2){
   let distance_center = (bc2.center.dif(bc1.center)).size();
-  if (abs(distance_center)<=(bc1.r/2+bc2.r/2)){
+  if (abs(distance_center)<=(bc1.r+bc2.r)){
     return true
   }
   return false
@@ -106,6 +106,8 @@ function collide_OBB_OBB (obb1,obb2){
   let auxAABB = new AABB(obb1.turn_OBB_to_AABB(),obb1.cor)
   colore(26)
   // "transformando" a OBB para o sistema local de obb1
-  let auxOBB = new OBB ([p1A,p2A,p3A,p4A],obb2.u.rot(-obb1.angle),obb2.cor)
+  let uAux = new Vec2 (cos(-obb1.angle+obb2.angle),sin(-obb1.angle+obb2.angle))
+  let auxOBB = new OBB ([p1A,p2A,p3A,p4A],uAux,obb2.cor)
+  auxAABB.draw();auxOBB.draw()
   return collide_AABB_OBB(auxAABB,auxOBB);
 }

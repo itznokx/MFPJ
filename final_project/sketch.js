@@ -133,7 +133,7 @@ function keyPressed(){
   if (key=='r'){
 
     if (actual==1 && bound1!=null){
-      points1 = randomPoints(rP)
+      points1 = randomPoints(numberOfRandomPoints)
       if (bound1.type=="AABB"){
         bound1 = null;
         bound1 = new AABB(points1,colorB1)
@@ -150,7 +150,7 @@ function keyPressed(){
       }
     }
     if (actual==2&&bound2!=null){
-      points2 = randomPoints(rP)
+      points2 = randomPoints(numberOfRandomPoints)
       if (bound2.type=="AABB"){
         bound2 = null;
         bound2 = new AABB(points2,colorB2)
