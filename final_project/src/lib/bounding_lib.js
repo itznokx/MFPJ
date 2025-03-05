@@ -7,6 +7,7 @@ function collide_BC_BC (bc1,bc2){
 }
 function collide_BC_AABB (bc1,aabb1){
   // visual sat (linhas)
+  /*
   strokeWeight(3)
   colore (aabb1.cor[0],aabb1.cor[1],aabb1.cor[1])
   line(aabb1.minP.x,-180,aabb1.maxP.x,-180)
@@ -15,6 +16,7 @@ function collide_BC_AABB (bc1,aabb1){
   line(bc1.center.x-bc1.r,-190,bc1.center.x+bc1.r,-190)
   line(190,bc1.center.y-bc1.r,190,bc1.center.y+bc1.r)
   strokeWeight(1)
+  */
   // calcular usando sat
   let close_x = max(aabb1.minP.x,min(bc1.center.x,aabb1.maxP.x))
   let close_y = max(aabb1.minP.y,min(bc1.center.y,aabb1.maxP.y))
@@ -107,7 +109,7 @@ class AABB{
     this.maxP = new Vec2 (aMaxX,aMaxY);
   }
   draw(){
-    colore(this.cor[0],this.cor[1],this.cor[2],this.cor[4])
+    colore(this.cor[0],this.cor[1],this.cor[2],64)
     quad( this.minP.x,this.minP.y,
           this.minP.x,this.maxP.y,
           this.maxP.x,this.maxP.y,
@@ -171,7 +173,7 @@ class OBB {
   }
 
   draw(){
-    colore(this.cor[0],this.cor[1],this.cor[2],this.cor[4])
+    colore(this.cor[0],this.cor[1],this.cor[2],64)
     //circle(this.p2.x,this.p2.y,10)
     //circle(this.p3.x,this.p3.y,10)
     quad(this.p1.x,this.p1.y,
@@ -268,7 +270,7 @@ class BC {
   }
   draw(){
     strokeWeight(2)
-    colore(this.cor[0],this.cor[1],this.cor[2],this.cor[4])
+    colore(this.cor[0],this.cor[1],this.cor[2],64)
     noFill()
     circle(this.center.x,this.center.y,this.r*2)
     strokeWeight(1)
