@@ -6,14 +6,29 @@ function collide_BC_BC (bc1,bc2){
   return false
 }
 function collide_BC_AABB (bc1,aabb1){
-  let closest_point = closestPoint(bc1.center,[aabb1.maxP,aabb1.minP]);
-  let dist = bc1.center.dif(closest_point);
-  if (dist.dot(dist)<=bc1.r*bc1.r){
+  let closest_point = closestPoint(bc1.center,[aabb1.maxP,aabb1.minP,new Vec2(aabb1.maxP.x,aabb1.minP.y),new Vec2(aabb1.minP.x,aabb1.maxP.y)]);
+  circle(closest_point.x,closest_point.y,10)
+  let dist_to_closest_point = closest_point.dif(bc1.center).size()
+  print(dist_to_closest_point)
+  if (aabb1.checkPoint(bc1.center)||(dist_to_closest_point<=bc1.r/2)){
     return true
   }
-  else{
-    return false
+  let d2 = 0;
+  // calcular para dimensao x
+  if (bc1.center.x > aabb1.maxP.x){
+    d2+= (bc1.center.x - aabb1.maxP.x)**2
   }
+  else{
+    d2+= (aabb1.minP.x - bc1.center.x)**2
+  }
+  // calcular para dimensão y
+  if (bc1.center.y > aabb1.maxP.y){
+    d2+= (bc1.center.y - aabb1.maxP.y)**2
+  }
+  else{
+    d2+= (aabb1.minP.y - bc1.center.y)**2
+  }
+  return (d2<=((bc1.r/2)**2))
 }
 function collide_BC_OBB (bc1,obb1){
   // rotacionar obb para uma abb
@@ -42,11 +57,8 @@ function collide_AABB_AABB (aabb1,aabb2){
   return true
 }
 function collide_AABB_OBB (aabb1,obb1){
-  let pointsAABB = [aabb1.maxP,
-                    aabb1.minP,
-                    new Vec2(aabb1.maxP.x,aabb1.minP.y),
-                    new Vec2(aabb1.minP.x,aabb1.maxP.y)]
-  let pointsOBB = [obb1.p1,obb1.p2,obb1.p3,obb1.p4]
+  let pointsAABB = [aabb1.maxP,aabb1.minP,new Vec2(aabb1.maxP.x,aabb1.minP.y),new Vec2(aabb1.minP.x,aabb1.maxP.y)]
+  let pointsOBB = [obb1.p1,obb1.p2,obb1.p3,obb1.p4,obb1.center]
   for (let p of pointsAABB){
     if(obb1.checkPoint(p)){
       return true
