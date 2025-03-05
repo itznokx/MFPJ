@@ -1,8 +1,8 @@
 # Projeto final de Matemática e Física para Jogos
 > Dimitri Barreto Medeiros - 509066
-
+> MFPJ - 2024.2
 ## Descrição
-Simulador de colisões entre Bounding Volumes (AABB,OBB,Circle)
+Simulador de colisões entre Bounding Volumes (AABB,OBB,Circle) desenvolvido em `p5.js`
 ### Funções
 - [x] AABB x AABB
 - [x] AABB x OBB
@@ -13,11 +13,11 @@ Simulador de colisões entre Bounding Volumes (AABB,OBB,Circle)
 - [x] Alternar entre cursores de bounding-volume
 - [x] Mudar iterativamente o bounding-volume (AABB,OBB,Circle)
 - [x] Reformular "nuvem" de pontos do bounding-volume correspondendo ao cursor atual
-- [] Mudar iterativamente o numéro de pontos gerados aleatoriamente
+- [ ] Mudar iterativamente o numéro de pontos gerados aleatoriamente
 ## Como iniciar
-- Para iniciar o programa, basta abrir o arquivo `index.html` com qualquer navegador (`recomendo o firefox`)
+- Para iniciar o programa, basta abrir o arquivo `index.html` com qualquer navegador (`recomendado o uso do navedor firefox`)
 - Por padrão, as bounding boxes irão ser geradas a partir de 2 pontos aleatórios gerados automaticamente. Isso pode ser alterado no arquivo [sketch.js](https://github.com/itznokx/MFPJ/blob/master/final_project/sketch.js), na linha 4.
-- O arquivo [index.html](https://github.com/itznokx/MFPJ/blob/master/final_project/index.html) pode ser alterado para melhor dinâmica na visualização de página.
+- O arquivo [index.html](https://github.com/itznokx/MFPJ/blob/master/final_project/index.html) pode ser alterado para melhor dinâmica na visualização do programa.
 
 ## Comandos
 
