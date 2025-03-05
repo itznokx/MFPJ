@@ -1,7 +1,7 @@
 /// guardam a posição do mouse no plano cartesiano
 var mouseXC, mouseYC = 0;
 var points = [];
-var rP = 2;
+var numberOfRandomPoints = 2;
 function randomPoints(maxP){
   let pts = []
   for (let i = 0;i<maxP;i++){
@@ -13,8 +13,8 @@ function randomPoints(maxP){
 function setup(){
   frameRate(10)
   createCanvas(400,400)
-  points1 = randomPoints(rP)
-  points2 = randomPoints(rP)
+  points1 = randomPoints(numberOfRandomPoints)
+  points2 = randomPoints(numberOfRandomPoints)
   
 }
 var bound1 = null;

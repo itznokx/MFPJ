@@ -4,11 +4,11 @@
 ## Descrição
 Simulador de colisões entre Bounding Volumes (AABB,OBB,Circle) desenvolvido em `p5.js`
 ### Funções
-- [x] AABB x AABB
-- [x] AABB x OBB
-- [x] AABB x Circle
-- [x] OBB x Circle
-- [x] OBB x OBB
+- [x] Colisão entre AABB x AABB
+- [x] Colisão entre AABB x OBB
+- [x] Colisão entre AABB x Circle
+- [x] Colisão entre OBB x Circle
+- [x] Colisão entre OBB x OBB
 - [x] Circle x Circle
 - [x] Alternar entre cursores de bounding-volume
 - [x] Mudar iterativamente o bounding-volume (AABB,OBB,Circle)
