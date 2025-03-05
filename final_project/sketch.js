@@ -25,8 +25,10 @@ var colorB1 = [64,64,255]
 var colorB2 = [255,64,64]
 var pointsB1 = [0,0,255]
 var pointsB2 = [255,0,0]
+var b1b2collision;
 function draw(){
   goCartesian()
+  b1b2collision = false
   let mouseInB1 = 0
   let mouseInB2 = 0
   let mousePoint = new Vec2 (0,0)
@@ -40,8 +42,12 @@ function draw(){
       print("Mouse in b1")
       mouseInB1 = 1
     }
-    if (bound1.type=="OBB"){
-      //bound1.draw_OBB_to_AABB();
+    if(bound2!=null){
+      if(bound2.checkCollide(bound1)){
+        b1b2collision = true
+      }else{
+        b1b2collision = false
+      }
     }
   }
   if (bound2!=null){
@@ -56,11 +62,26 @@ function draw(){
     }
     if(bound1!=null){
       if(bound2.checkCollide(bound1)){
-        texto("Eles colidem",-100,100)
+        b1b2collision = true
+      }else{
+        b1b2collision = false
       }
     }
   }
-  colore(255*mouseInB2,32,255*mouseInB1);
+  colore(0)
+  texto("Colisao entre b1 b2: ",-180,180)
+  texto("Mouse em b1: ",-180,160)
+  texto("Mouse em b2: ",-180,140)
+  colore(0)
+  colore(0,128*b1b2collision,0);
+  texto((b1b2collision==true),-60,180)
+  colore(0)
+  colore(0,128*mouseInB1,0);
+  texto((mouseInB1==true),-90,160)
+  colore(0)
+  colore(0,128*mouseInB2,0);
+  texto((mouseInB2==true),-90,140)
+  colore(255*mouseInB2,0,255*mouseInB1)
   circle(mouseXC,mouseYC,4)
 }
 function keyPressed(){
@@ -101,7 +122,8 @@ function keyPressed(){
     }
   }
   if (key=='r'){
-    if (actual==1){
+
+    if (actual==1 && bound1!=null){
       points1 = randomPoints(rP)
       if (bound1.type=="AABB"){
         bound1 = null;
@@ -118,7 +140,7 @@ function keyPressed(){
         bound1 = new BC(points1,colorB1)
       }
     }
-    if (actual==2){
+    if (actual==2&&bound2!=null){
       points2 = randomPoints(rP)
       if (bound2.type=="AABB"){
         bound2 = null;

@@ -1,13 +1,12 @@
 function collide_BC_BC (bc1,bc2){
   let distance_center = (bc2.center.dif(bc1.center)).size();
-  if (abs(distance_center)<=(bc1.r+bc2.r)){
+  if (abs(distance_center)<=(bc1.r/2+bc2.r/2)){
     return true
   }
   return false
 }
 function collide_BC_AABB (bc1,aabb1){
   let closest_point = closestPoint(bc1.center,[aabb1.maxP,aabb1.minP]);
-  circle (closest_point.x,closest_point.y,5)
   let dist = bc1.center.dif(closest_point);
   if (dist.dot(dist)<=bc1.r*bc1.r){
     return true
@@ -30,6 +29,7 @@ function collide_BC_OBB (bc1,obb1){
   let newY = dx * sina + dy * cosa;
   let newPoint = new Vec2 (newX,newY)
   auxBC.center = newPoint
+  auxBC.draw()
   return collide_BC_AABB(auxBC,auxAABB);
 }
 function collide_AABB_AABB (aabb1,aabb2){
@@ -97,7 +97,7 @@ class AABB{
     this.maxP = new Vec2 (aMaxX,aMaxY);
   }
   draw(){
-    colore(this.cor[0],this.cor[1],this.cor[2],32)
+    colore(this.cor[0],this.cor[1],this.cor[2],128)
     quad( this.minP.x,this.minP.y,
           this.minP.x,this.maxP.y,
           this.maxP.x,this.maxP.y,
@@ -161,7 +161,7 @@ class OBB {
   }
 
   draw(){
-    colore(this.cor[0],this.cor[1],this.cor[2],32)
+    colore(this.cor[0],this.cor[1],this.cor[2],128)
     //circle(this.p2.x,this.p2.y,10)
     //circle(this.p3.x,this.p3.y,10)
     quad(this.p1.x,this.p1.y,
