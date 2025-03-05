@@ -91,7 +91,7 @@ function renderPoints(array){
     circle(array[i].x,array[i].y,5)
   }
 }
-function randomPoint(){
+function randomPoint(o){
   let w = width/4
   let h = height/4
   let x1 = random(-w,w)
@@ -135,14 +135,14 @@ function fartestPoint(pi,points){
   return [farPi,maxDist];
 }
 function closestPoint(pi,points){
-  let farPi = pi;
+  let closePi = pi;
   let minDist = Infinity;
   for (let p of points){
     let aux = p.dif(pi);
     if (aux.size()<minDist){
-      farPi = p;
+      closePi = p;
       minDist = aux.size()
     }
   }
-  return [farPi,minDist];
+  return closePi;
 }

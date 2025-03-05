@@ -16,7 +16,20 @@ function colide_BC_AABB (bc1,aabb1){
   }
 }
 function colide_BC_OBB (bc1,obb1){
-
+  // rotacionar obb para uma abb
+  // essa func retorna também os pontos da AABB
+  let auxPoints = obb1.draw_OBB_to_AABB()
+  let auxAABB = new AABB(auxPoints,[0,0,0])
+  let auxBC = bc1;
+  let cosa = cos(-obb1.angle)
+  let sina = sin(-obb1.angle)
+  let dx = auxBC.center.x-obb1.center.x
+  let dy = auxBC.center.y-obb1.center.y
+  let newX = dx * cosa - dy * sina;
+  let newY = dx * sina + dy * cosa;
+  let newPoint = new Vec2 (newX,newY)
+  auxBC.center = newPoint
+  return colide_BC_AABB(auxBC,auxAABB);
 }
 function collide_AABB_AABB (aabb1,aabb2){
   if (aabb1.maxP.x < aabb2.minP.x||
@@ -28,19 +41,7 @@ function collide_AABB_AABB (aabb1,aabb2){
   return true
 }
 function collide_AABB_OBB (aabb1,obb1){
-  let corners = [obb1.p1,obb1.p2,obb1.p3,obb1.p3]
-  let colide = false;
-  for (let point of corners){
-    if (point.x > aabb1.maxP.x||
-        point.y > aabb1.maxP.y||
-        point.x < aabb1.minP.x||
-        point.y < aabb1.minP.y){
-      colide = false
-    }
-    else{
-      return true
-    }
-  }
+  
 }
 function collide_OBB_OBB (obb1,obb2){
 
@@ -86,6 +87,17 @@ class AABB{
       return false
     }
     return true
+  }
+  checkColide(bound2){
+    if (bound2.type=="AABB"){
+
+    }
+    if (bound2.type=="OBB"){
+
+    }
+    if (bound2.type=="BC"){
+
+    }
   }
 }
 // OBB
@@ -144,6 +156,7 @@ class OBB {
           p2A.x,p2A.y,
           p3A.x,p3A.y,
           p4A.x,p4A.y)
+    return [p1A,p2A,p3A,p4A]
   }
   drawSelfPoints(cor){
     colore(cor[0],cor[1],cor[2],cor[3])
@@ -169,9 +182,18 @@ class OBB {
     let newPoint = new Vec2 (newX,newY)
     //colore (0,0,0)
     //circle(newPoint.x,newPoint.y,5)
-    let halfW = this.largura / 2;
-    let halfH = this.height / 2;
     return auxAABB.checkPoint(newPoint)
+  }
+  checkColide(bound2){
+    if (bound2.type=="AABB"){
+
+    }
+    if (bound2.type=="OBB"){
+
+    }
+    if (bound2.type=="BC"){
+      
+    }
   }
 }
 // BC (BOUND CIRCLE)
@@ -210,5 +232,16 @@ class BC {
       return true
     }
     return false
+  }
+  checkColide(bound2){
+    if (bound2.type=="AABB"){
+
+    }
+    if (bound2.type=="OBB"){
+
+    }
+    if (bound2.type=="BC"){
+      
+    }
   }
 }
