@@ -96,15 +96,12 @@ function collide_OBB_OBB (obb1,obb2){
   let sina = sin(-obb1.angle)
   let pointsOBB1 = [obb1.p1,obb1.p2,obb1.p3,obb1.p4]
   let pointsOBB2 = [obb2.p1,obb2.p2,obb2.p3,obb2.p4]
-  for (let p of pointsOBB2){
-    if(obb1.checkPoint(p)){
-      return true
-    }
-  }
-  for (let q of pointsOBB1){
-    if (obb2.checkPoint(q)){
-      return true
-    }
-  }
-  return false
+  let p1A = obb2.p1.rot(-obb1.angle)
+  let p2A = obb2.p2.rot(-obb1.angle)
+  let p3A = obb2.p3.rot(-obb1.angle)
+  let p4A = obb2.p4.rot(-obb1.angle)
+  let auxAABB = new AABB(obb1.turn_OBB_to_AABB(),obb1.cor)
+  colore(26)
+  let auxOBB = new OBB ([p1A,p2A,p3A,p4A],obb2.u.rot(-obb1.angle),obb2.cor)
+  return collide_AABB_OBB(auxAABB,auxOBB);
 }

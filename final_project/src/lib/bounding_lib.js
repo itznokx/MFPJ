@@ -154,7 +154,7 @@ class OBB {
       return(collide_AABB_OBB(bound2,this))
     }
     if (bound2.type=="OBB"){
-      return(collide_OBB_OBB(bound2,this))
+      return(collide_OBB_OBB(this,bound2))
     }
     if (bound2.type=="BC"){
       return(collide_BC_OBB(bound2,this))

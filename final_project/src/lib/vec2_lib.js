@@ -66,7 +66,7 @@ class Vec2{
     let cosA = cos(theta)
     let sinA = sin(theta)
     let rotX = this.x*cosA - this.y*sinA
-    let rotY = this.x*sinA - this.y*cosA
+    let rotY = this.x*sinA + this.y*cosA
     return new Vec2 (rotX,rotY);
   }
 }
